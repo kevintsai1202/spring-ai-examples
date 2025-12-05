@@ -1,0 +1,11 @@
+com\example\mcp\server\McpServerApplication.class
+com\example\mcp\server\model\UserProfile$UserProfileBuilder.class
+com\example\mcp\server\provider\tool\TextToolProvider.class
+com\example\mcp\server\model\WeatherResponse$CurrentWeather.class
+com\example\mcp\server\provider\tool\TimeToolProvider.class
+com\example\mcp\server\config\ApplicationConfig.class
+com\example\mcp\server\model\UserProfile.class
+com\example\mcp\server\model\WeatherResponse.class
+com\example\mcp\server\provider\tool\MathToolProvider.class
+META-INF\spring-configuration-metadata.json
+com\example\mcp\server\provider\tool\WeatherToolProvider.class

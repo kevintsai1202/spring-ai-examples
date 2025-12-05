@@ -1,0 +1,28 @@
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.0)
+
+2025-10-24 22:51:36 - c.e.SpringAiVoiceGenerationApplication - Starting SpringAiVoiceGenerationApplication v1.0.0 using Java 21 with PID 31880 (E:\Spring_AI_BOOK\code-examples\chapter5-voice-generation\target\spring-ai-voice-generation-1.0.0.jar started by kevintsai in E:\Spring_AI_BOOK\code-examples\chapter5-voice-generation)
+2025-10-24 22:51:36 - c.e.SpringAiVoiceGenerationApplication - Running with Spring Boot v3.3.0, Spring v6.1.8
+2025-10-24 22:51:36 - c.e.SpringAiVoiceGenerationApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-24 22:51:38 - o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-10-24 22:51:38 - o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-24 22:51:38 - o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2025-10-24 22:51:38 - o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-10-24 22:51:38 - o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2381 ms
+2025-10-24 22:51:41 - o.s.a.m.t.a.ToolCallingAutoConfiguration - Cannot load class: org.springframework.security.oauth2.client.ClientAuthorizationException
+2025-10-24 22:51:41 - o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-10-24 22:51:41 - c.e.SpringAiVoiceGenerationApplication - Started SpringAiVoiceGenerationApplication in 6.253 seconds (process running for 7.233)
+2025-10-24 22:51:44 - o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-24 22:51:44 - o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-10-24 22:51:44 - o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-10-24 22:51:44 - c.example.controller.VoiceController - 檢查語音生成服務健康狀態
+2025-10-24 22:51:45 - c.example.controller.VoiceController - 接收語音生成請求，文本長度: 37，語音: alloy
+2025-10-24 22:51:45 - c.e.s.i.VoiceGenerationServiceImpl - 開始生成語音，文本長度: 37，語音: alloy，速度: 1.0
+2025-10-24 22:51:45 - c.e.s.i.VoiceGenerationServiceImpl - 使用 Spring AI 模型生成語音，模型: tts-1-hd，語音: alloy，文本長度: 37
+2025-10-24 22:51:45 - c.e.s.i.VoiceGenerationServiceImpl - 語音生成成功，耗時: 1 ms，請求ID: a9e24bb5-42cb-4f33-a7f8-5db4baac18d9

@@ -1,0 +1,8 @@
+E:\Spring_AI_BOOK\code-examples\chapter5-voice-generation\src\main\java\com\example\config\SpeechModelConfig.java
+E:\Spring_AI_BOOK\code-examples\chapter5-voice-generation\src\main\java\com\example\controller\VoiceController.java
+E:\Spring_AI_BOOK\code-examples\chapter5-voice-generation\src\main\java\com\example\dto\VoiceOption.java
+E:\Spring_AI_BOOK\code-examples\chapter5-voice-generation\src\main\java\com\example\dto\VoiceRequest.java
+E:\Spring_AI_BOOK\code-examples\chapter5-voice-generation\src\main\java\com\example\dto\VoiceResponse.java
+E:\Spring_AI_BOOK\code-examples\chapter5-voice-generation\src\main\java\com\example\service\impl\VoiceGenerationServiceImpl.java
+E:\Spring_AI_BOOK\code-examples\chapter5-voice-generation\src\main\java\com\example\service\VoiceGenerationService.java
+E:\Spring_AI_BOOK\code-examples\chapter5-voice-generation\src\main\java\com\example\SpringAiVoiceGenerationApplication.java

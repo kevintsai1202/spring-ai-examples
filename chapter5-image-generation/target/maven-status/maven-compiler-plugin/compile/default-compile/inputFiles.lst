@@ -1,0 +1,9 @@
+E:\Spring_AI_BOOK\code-examples\chapter5-5.3-image-generation\src\main\java\com\example\config\ImageModelConfig.java
+E:\Spring_AI_BOOK\code-examples\chapter5-5.3-image-generation\src\main\java\com\example\controller\ImageGenerationController.java
+E:\Spring_AI_BOOK\code-examples\chapter5-5.3-image-generation\src\main\java\com\example\dto\ImageGenerationRequest.java
+E:\Spring_AI_BOOK\code-examples\chapter5-5.3-image-generation\src\main\java\com\example\dto\ImageGenerationResponse.java
+E:\Spring_AI_BOOK\code-examples\chapter5-5.3-image-generation\src\main\java\com\example\dto\ProductImageRequest.java
+E:\Spring_AI_BOOK\code-examples\chapter5-5.3-image-generation\src\main\java\com\example\dto\ProductImageResponse.java
+E:\Spring_AI_BOOK\code-examples\chapter5-5.3-image-generation\src\main\java\com\example\service\ImageGenerationService.java
+E:\Spring_AI_BOOK\code-examples\chapter5-5.3-image-generation\src\main\java\com\example\service\impl\ImageGenerationServiceImpl.java
+E:\Spring_AI_BOOK\code-examples\chapter5-5.3-image-generation\src\main\java\com\example\SpringAiImageGenerationApplication.java

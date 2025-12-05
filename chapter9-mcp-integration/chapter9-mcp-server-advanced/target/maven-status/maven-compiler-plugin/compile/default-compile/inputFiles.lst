@@ -1,0 +1,13 @@
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\controller\AdminController.java
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\entity\CompletionData.java
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\entity\PromptTemplate.java
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\McpServerAdvancedApplication.java
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\model\CompletionSuggestion.java
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\model\PromptParameter.java
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\model\ToolRegistration.java
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\provider\CompletionProvider.java
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\provider\DynamicPromptProvider.java
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\provider\PromptProvider.java
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\repository\CompletionDataRepository.java
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\repository\PromptTemplateRepository.java
+E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-advanced\src\main\java\com\example\mcp\server\advanced\service\DynamicToolManager.java

@@ -1,0 +1,13 @@
+com\example\mcpclient\dto\ChatResponse$ChatResponseBuilder.class
+com\example\mcpclient\dto\ChatResponse.class
+com\example\mcpclient\dto\ChatRequest.class
+com\example\mcpclient\model\ResourceInfo.class
+com\example\mcpclient\dto\ChatRequest$ChatRequestBuilder.class
+com\example\mcpclient\model\ToolInfo.class
+com\example\mcpclient\model\ResourceInfo$ResourceInfoBuilder.class
+com\example\mcpclient\model\ServerInfoResponse.class
+com\example\mcpclient\model\ToolInfo$ToolInfoBuilder.class
+com\example\mcpclient\model\ServerCapabilities$ServerCapabilitiesBuilder.class
+com\example\mcpclient\McpClientApplication.class
+com\example\mcpclient\model\ServerCapabilities.class
+com\example\mcpclient\model\ServerInfoResponse$ServerInfoResponseBuilder.class

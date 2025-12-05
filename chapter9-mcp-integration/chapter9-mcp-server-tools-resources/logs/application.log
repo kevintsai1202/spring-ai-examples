@@ -1,0 +1,70 @@
+2025-11-02 10:46:05 [main] INFO  c.e.mcp.server.McpServerApplication - Starting McpServerApplication using Java 21 with PID 10252 (E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-tools-resources\target\classes started by kevintsai in E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-tools-resources)
+2025-11-02 10:46:05 [main] DEBUG c.e.mcp.server.McpServerApplication - Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-02 10:46:05 [main] INFO  c.e.mcp.server.McpServerApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-02 10:46:05 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-02 10:46:05 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-02 10:46:05 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-02 10:46:05 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-02 10:46:05 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 732 ms
+2025-11-02 10:46:06 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Enable tools capabilities, notification: true
+2025-11-02 10:46:06 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Registered tools: 9
+2025-11-02 10:46:06 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Enable resources capabilities, notification: true
+2025-11-02 10:46:06 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Enable prompts capabilities, notification: true
+2025-11-02 10:46:06 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Enable completions capabilities
+2025-11-02 10:46:06 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-11-02 10:46:06 [main] INFO  c.e.mcp.server.McpServerApplication - Started McpServerApplication in 1.798 seconds (process running for 2.038)
+2025-11-02 10:46:06 [main] INFO  c.e.mcp.server.McpServerApplication - ========================================
+2025-11-02 10:46:06 [main] INFO  c.e.mcp.server.McpServerApplication -   MCP Server 已啟動完成
+2025-11-02 10:46:06 [main] INFO  c.e.mcp.server.McpServerApplication - ========================================
+2025-11-02 10:46:43 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-02 10:46:43 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-11-02 10:46:43 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-11-02 12:15:00 [main] INFO  c.e.mcp.server.McpServerApplication - Starting McpServerApplication using Java 21 with PID 31964 (E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-tools-resources\target\classes started by kevintsai in E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-tools-resources)
+2025-11-02 12:15:00 [main] DEBUG c.e.mcp.server.McpServerApplication - Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-02 12:15:00 [main] INFO  c.e.mcp.server.McpServerApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-02 12:15:01 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-02 12:15:01 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-02 12:15:01 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-02 12:15:01 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-02 12:15:01 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 675 ms
+2025-11-02 12:15:02 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Enable tools capabilities, notification: true
+2025-11-02 12:15:02 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Registered tools: 9
+2025-11-02 12:15:02 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Enable resources capabilities, notification: true
+2025-11-02 12:15:02 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Enable prompts capabilities, notification: true
+2025-11-02 12:15:02 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Enable completions capabilities
+2025-11-02 12:15:02 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2025-11-02 12:15:02 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-11-02 12:15:02 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2025-11-02 12:16:51 [main] INFO  c.e.mcp.server.McpServerApplication - Starting McpServerApplication using Java 21 with PID 32064 (E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-tools-resources\target\classes started by kevintsai in E:\Spring_AI_BOOK\code-examples\chapter9-mcp-integration\chapter9-mcp-server-tools-resources)
+2025-11-02 12:16:51 [main] DEBUG c.e.mcp.server.McpServerApplication - Running with Spring Boot v3.5.7, Spring v6.2.12
+2025-11-02 12:16:51 [main] INFO  c.e.mcp.server.McpServerApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-02 12:16:52 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-02 12:16:52 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-02 12:16:52 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-02 12:16:52 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-02 12:16:52 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 683 ms
+2025-11-02 12:16:52 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Enable tools capabilities, notification: true
+2025-11-02 12:16:52 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Registered tools: 9
+2025-11-02 12:16:52 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Enable resources capabilities, notification: true
+2025-11-02 12:16:52 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Enable prompts capabilities, notification: true
+2025-11-02 12:16:52 [main] INFO  o.s.a.m.s.a.McpServerAutoConfiguration - Enable completions capabilities
+2025-11-02 12:16:52 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-11-02 12:16:52 [main] INFO  c.e.mcp.server.McpServerApplication - Started McpServerApplication in 1.641 seconds (process running for 1.865)
+2025-11-02 12:16:52 [main] INFO  c.e.mcp.server.McpServerApplication - ========================================
+2025-11-02 12:16:52 [main] INFO  c.e.mcp.server.McpServerApplication -   MCP Server 已啟動完成
+2025-11-02 12:16:52 [main] INFO  c.e.mcp.server.McpServerApplication - ========================================

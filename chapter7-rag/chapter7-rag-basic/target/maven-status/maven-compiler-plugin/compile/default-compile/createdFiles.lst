@@ -1,0 +1,13 @@
+com\example\rag\basic\model\RAGQueryResponse.class
+com\example\rag\basic\controller\RAGController$1.class
+com\example\rag\basic\RagBasicApplication.class
+com\example\rag\basic\model\DocumentSource.class
+com\example\rag\basic\exception\RAGException.class
+com\example\rag\basic\controller\RAGController.class
+com\example\rag\basic\model\RAGQueryResponse$RAGQueryResponseBuilder.class
+com\example\rag\basic\model\DocumentSource$DocumentSourceBuilder.class
+com\example\rag\basic\model\RAGQueryRequest$RAGQueryRequestBuilder.class
+com\example\rag\basic\service\DocumentProcessingService.class
+com\example\rag\basic\service\RAGService.class
+com\example\rag\basic\config\RAGConfig.class
+com\example\rag\basic\model\RAGQueryRequest.class

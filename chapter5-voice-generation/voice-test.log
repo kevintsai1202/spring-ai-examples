@@ -1,0 +1,47 @@
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.0)
+
+2025-10-24 22:50:31 - c.e.SpringAiVoiceGenerationApplication - Starting SpringAiVoiceGenerationApplication v1.0.0 using Java 21 with PID 40392 (E:\Spring_AI_BOOK\code-examples\chapter5-voice-generation\target\spring-ai-voice-generation-1.0.0.jar started by kevintsai in E:\Spring_AI_BOOK\code-examples\chapter5-voice-generation)
+2025-10-24 22:50:31 - c.e.SpringAiVoiceGenerationApplication - Running with Spring Boot v3.3.0, Spring v6.1.8
+2025-10-24 22:50:31 - c.e.SpringAiVoiceGenerationApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-24 22:50:33 - o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-24 22:50:33 - o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-10-24 22:50:33 - o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 25 ms. Found 0 Redis repository interfaces.
+2025-10-24 22:50:34 - o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-10-24 22:50:34 - o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-24 22:50:34 - o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2025-10-24 22:50:34 - o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-10-24 22:50:34 - o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2693 ms
+2025-10-24 22:50:36 - o.s.a.m.t.a.ToolCallingAutoConfiguration - Cannot load class: org.springframework.security.oauth2.client.ClientAuthorizationException
+2025-10-24 22:50:38 - o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-10-24 22:50:38 - c.e.SpringAiVoiceGenerationApplication - Started SpringAiVoiceGenerationApplication in 7.201 seconds (process running for 8.105)
+2025-10-24 22:50:40 - o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-24 22:50:40 - o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-10-24 22:50:40 - o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-10-24 22:50:40 - c.example.controller.VoiceController - 檢查語音生成服務健康狀態
+2025-10-24 22:50:40 - c.example.controller.VoiceController - 獲取可用語音列表
+2025-10-24 22:50:40 - c.e.s.i.VoiceGenerationServiceImpl - 獲取可用語音列表
+2025-10-24 22:50:40 - c.example.controller.VoiceController - 驗證文本內容，長度: 47
+2025-10-24 22:50:41 - c.example.controller.VoiceController - 估算音頻時長，文本長度: 60，語速: 1.0
+2025-10-24 22:50:41 - c.example.controller.VoiceController - 接收語音生成請求，文本長度: 51，語音: alloy
+2025-10-24 22:50:41 - o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.data.redis.RedisConnectionFailureException: Unable to connect to Redis] with root cause
+java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:973)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:336)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:339)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:776)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:994)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
