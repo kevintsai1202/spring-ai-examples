@@ -1,61 +1,51 @@
-/**
- * 日期時間工具類別
- * 提供當前時間查詢功能，展示 Tool Calling 的基本使用
- */
 package com.example.tools;
 
-import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.stereotype.Component;
+
+/**
+ * 日期時間相關工具
+ */
 @Component
 public class DateTimeTools {
 
     /**
-     * 獲取當前日期和時間
-     * @return 格式化的當前日期時間字串
+     * 取得台灣目前日期時間
+     *
+     * @return 台灣時區日期時間字串
      */
+    @Tool(description = "Get the current date and time in Taiwan (Asia/Taipei timezone)")
     public String getCurrentDateTime() {
-        LocalDateTime now = LocalDateTime.now();
+        // 重要物件：台灣時區
+        ZoneId zoneId = ZoneId.of("Asia/Taipei");
+        ZonedDateTime now = ZonedDateTime.now(zoneId);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss");
 
         return String.format("當前時間：%s（台灣時間）", now.format(formatter));
     }
 
     /**
-     * 獲取指定格式的當前時間
-     * @param format 時間格式（如：yyyy-MM-dd HH:mm:ss）
-     * @return 格式化的時間字串
+     * 依指定時區取得目前日期時間
+     *
+     * @param timezone 時區代碼（例如 Asia/Taipei）
+     * @return 指定時區日期時間字串
      */
-    public String getCurrentTimeWithFormat(String format) {
+    @Tool(description = "Get the current date and time in specified timezone, "
+            + "e.g. 'Asia/Taipei', 'America/New_York', 'Europe/London'.")
+    public String getCurrentDateTimeByZone(String timezone) {
         try {
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+            // 重要物件：使用者指定時區
+            ZoneId zoneId = ZoneId.of(timezone);
+            ZonedDateTime now = ZonedDateTime.now(zoneId);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
+
             return now.format(formatter);
         } catch (Exception e) {
-            return "時間格式錯誤，請使用正確的格式，例如：yyyy-MM-dd HH:mm:ss";
+            return "Invalid timezone: " + timezone;
         }
-    }
-
-    /**
-     * 獲取當前時間戳
-     * @return Unix 時間戳
-     */
-    public String getCurrentTimestamp() {
-        long timestamp = System.currentTimeMillis() / 1000;
-        return String.format("當前時間戳：%d", timestamp);
-    }
-
-    /**
-     * 獲取當前是星期幾
-     * @return 星期資訊
-     */
-    public String getCurrentDayOfWeek() {
-        LocalDateTime now = LocalDateTime.now();
-        String[] weekDays = {"星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"};
-        int dayOfWeek = now.getDayOfWeek().getValue() - 1;
-
-        return String.format("今天是%s", weekDays[dayOfWeek]);
     }
 }

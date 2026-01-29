@@ -1,260 +1,223 @@
 package com.example.tools;
 
-import com.example.dto.SalesAnalysisRequest;
-import com.example.dto.SalesAnalysisResponse;
+import com.example.model.CategoryStat;
 import com.example.model.Product;
+import com.example.model.ProductSalesResponse;
+import com.example.model.SalesStatistics;
 import com.example.service.EnterpriseDataService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Component;
 
-import java.time.YearMonth;
-import java.util.function.Function;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * 產品銷售工具 - 提供銷售分析相關的 Tool Calling 功能
- * 用於 5.7 企業數據工具章節
+ * 企業產品銷售工具
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ProductSalesTools {
 
-    private final EnterpriseDataService enterpriseDataService;
+    /**
+     * 重要物件：企業資料服務
+     */
+    private final EnterpriseDataService dataService;
 
     /**
-     * 分析銷售數據
-     * 參數: 分析類型, 開始月份, 結束月份, 產品分類
-     * 返回: 完整的銷售分析結果
+     * 查詢產品銷售資料
+     *
+     * @param year    查詢年份
+     * @param product 產品關鍵字（型號或名稱）
+     * @return 產品銷售回應
      */
-    public SalesAnalysisResponse analyzeSalesData(
-            String analysisType,
-            String startDate,
-            String endDate,
-            String category) {
+    @Tool(description = "Get company product sales information by year and product model. "
+            + "Can filter by year (e.g., '2023', '2024') and product (model or name). "
+            + "Returns detailed sales data including quantity, revenue, and product information.")
+    public ProductSalesResponse getProductSales(String year, String product) {
+        log.info("查詢產品銷售：年份={}, 產品={}", year, product);
 
-        log.info("執行銷售分析: type={}, start={}, end={}, category={}",
-                analysisType, startDate, endDate, category);
+        List<Product> products = dataService.filterProducts(year, product);
 
-        SalesAnalysisRequest request = SalesAnalysisRequest.builder()
-                .analysisType(analysisType != null ? analysisType : "MONTHLY")
-                .startDate(parseYearMonth(startDate))
-                .endDate(parseYearMonth(endDate))
-                .category(category)
-                .includeTrendAnalysis(true)
-                .includeForecast(true)
+        int totalQuantity = products.stream()
+                .mapToInt(Product::getQuantity)
+                .sum();
+
+        BigDecimal totalRevenue = products.stream()
+                .map(Product::getRevenue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return ProductSalesResponse.builder()
+                .products(products)
+                .totalQuantity(totalQuantity)
+                .totalRevenue(totalRevenue)
+                .queryYear(year)
+                .queryProduct(product)
                 .build();
-
-        return enterpriseDataService.analyzeSales(request);
     }
 
     /**
-     * 查詢特定時期的銷售排名
-     * 參數: 月份 (格式: yyyy-MM)
-     * 返回: 該月銷售排名 JSON
+     * 獲取銷售統計分析
+     *
+     * @param year 查詢年份
+     * @return 統計分析結果
      */
-    public String getSalesRankingByMonth(String month) {
-        log.info("查詢銷售排名: month={}", month);
+    @Tool(description = "Get sales statistics and analysis for a specific year. "
+            + "Returns top-selling products, category breakdown, and growth metrics.")
+    public SalesStatistics getSalesStatistics(String year) {
+        List<Product> products = dataService.filterProducts(year, null);
 
-        YearMonth yearMonth = parseYearMonth(month);
-        SalesAnalysisRequest request = SalesAnalysisRequest.builder()
-                .analysisType("MONTHLY")
-                .startDate(yearMonth)
-                .endDate(yearMonth)
-                .includeTrendAnalysis(false)
-                .includeForecast(false)
+        List<CategoryStat> categoryStats = products.stream()
+                .collect(Collectors.groupingBy(Product::getCategory))
+                .entrySet()
+                .stream()
+                .map(entry -> buildCategoryStat(entry.getKey(), entry.getValue(), products))
+                .toList();
+
+        List<Product> topProducts = products.stream()
+                .sorted(Comparator.comparing(Product::getQuantity).reversed())
+                .limit(5)
+                .toList();
+
+        return SalesStatistics.builder()
+                .topProducts(topProducts)
+                .categoryStats(categoryStats)
                 .build();
-
-        SalesAnalysisResponse response = enterpriseDataService.analyzeSales(request);
-
-        // 返回排名信息 (JSON 格式)
-        StringBuilder sb = new StringBuilder();
-        sb.append("當月銷售排名 (").append(month).append("):\n");
-        for (var detail : response.getProductDetails()) {
-            sb.append(String.format("%d. %s: %d 單位, 金額: %s\n",
-                    detail.getRanking(),
-                    detail.getProductName(),
-                    detail.getSalesVolume(),
-                    detail.getSalesAmount()));
-        }
-
-        return sb.toString();
     }
 
     /**
-     * 計算年度銷售增長率
-     * 參數: 年份 (格式: yyyy)
-     * 返回: 增長率信息
+     * 比較不同年份的銷售表現
+     *
+     * @param year1 年份一
+     * @param year2 年份二
+     * @return 比較結果文字
      */
-    public String getYearlyGrowthRate(String year) {
-        log.info("查詢年度增長率: year={}", year);
+    @Tool(description = "Compare sales performance between two years. "
+            + "Returns detailed comparison including growth rates and product performance changes.")
+    public String compareSalesByYear(String year1, String year2) {
+        List<Product> products1 = dataService.filterProducts(year1, null);
+        List<Product> products2 = dataService.filterProducts(year2, null);
 
-        int yearNum = Integer.parseInt(year);
-        YearMonth startDate = YearMonth.of(yearNum, 1);
-        YearMonth endDate = YearMonth.of(yearNum, 12);
+        int total1 = products1.stream().mapToInt(Product::getQuantity).sum();
+        int total2 = products2.stream().mapToInt(Product::getQuantity).sum();
 
-        SalesAnalysisRequest request = SalesAnalysisRequest.builder()
-                .analysisType("YEARLY")
-                .startDate(startDate)
-                .endDate(endDate)
-                .includeTrendAnalysis(true)
-                .includeForecast(false)
-                .build();
+        BigDecimal revenue1 = products1.stream()
+                .map(Product::getRevenue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        SalesAnalysisResponse response = enterpriseDataService.analyzeSales(request);
+        BigDecimal revenue2 = products2.stream()
+                .map(Product::getRevenue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        double quantityGrowth = calculateGrowthRate(total1, total2);
+        double revenueGrowth = calculateGrowthRate(revenue1, revenue2);
 
         return String.format(
-                "%s 年銷售分析:\n" +
-                        "總銷售額: %s\n" +
-                        "總銷售件數: %d\n" +
-                        "月增率: %s%%\n" +
-                        "年增率: %s%%",
-                year,
-                response.getSummary().getTotalSalesAmount(),
-                response.getSummary().getTotalSalesVolume(),
-                response.getSummary().getMonthOverMonthGrowth(),
-                response.getSummary().getYearOverYearGrowth());
+                "年度銷售比較分析 (%s vs %s):\n"
+                        + "銷售數量：%d → %d (成長率：%.2f%%)\n"
+                        + "銷售金額：%s → %s (成長率：%.2f%%)\n"
+                        + "產品數量：%d → %d\n",
+                year1, year2,
+                total1, total2, quantityGrowth,
+                formatCurrency(revenue1), formatCurrency(revenue2), revenueGrowth,
+                products1.size(), products2.size());
     }
 
     /**
-     * 獲取銷售預測
-     * 參數: 預測月份數量 (1-12)
-     * 返回: 預測數據
+     * 組裝分類統計資訊
+     *
+     * @param category 分類
+     * @param products 分類產品
+     * @param all      全部產品
+     * @return 分類統計
      */
-    public String getForecast(int months) {
-        log.info("獲取銷售預測: months={}", months);
+    private CategoryStat buildCategoryStat(String category, List<Product> products, List<Product> all) {
+        int quantity = products.stream()
+                .mapToInt(Product::getQuantity)
+                .sum();
 
-        if (months < 1 || months > 12) {
-            return "預測月份必須在 1-12 之間";
-        }
+        BigDecimal revenue = products.stream()
+                .map(Product::getRevenue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        YearMonth endDate = YearMonth.now();
-        YearMonth startDate = endDate.minusMonths(Math.max(0, 12 - months));
+        double percentage = calculatePercentage(quantity, all);
 
-        SalesAnalysisRequest request = SalesAnalysisRequest.builder()
-                .analysisType("FORECAST")
-                .startDate(startDate)
-                .endDate(endDate)
-                .includeTrendAnalysis(true)
-                .includeForecast(true)
-                .build();
-
-        SalesAnalysisResponse response = enterpriseDataService.analyzeSales(request);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("未來 ").append(months).append(" 個月銷售預測:\n");
-        for (var forecast : response.getForecasts()) {
-            // 格式化數字，只顯示兩位小數
-            java.text.DecimalFormat df = new java.text.DecimalFormat("#,##0.00");
-            String formattedAmount = df.format(forecast.getForecastedSalesAmount());
-            String formattedConfidence = df.format(forecast.getConfidence());
-
-            sb.append(String.format("%s: 預測銷售額 %s, 件數 %d, 信心度 %s%%\n",
-                    forecast.getForecastPeriod(),
-                    formattedAmount,
-                    forecast.getForecastedVolume(),
-                    formattedConfidence));
-        }
-
-        return sb.toString();
-    }
-
-    /**
-     * 比較產品銷售表現
-     * 參數: 產品 ID 列表 (逗號分隔)
-     * 返回: 產品對比分析結果
-     */
-    public String compareProductPerformance(String productIds) {
-        log.info("比較產品表現: productIds={}", productIds);
-
-        String[] ids = productIds.split(",");
-        java.util.List<String> idList = java.util.Arrays.asList(ids);
-
-        YearMonth startDate = YearMonth.now().minusMonths(6);
-        YearMonth endDate = YearMonth.now();
-
-        SalesAnalysisRequest request = SalesAnalysisRequest.builder()
-                .analysisType("COMPARISON")
-                .startDate(startDate)
-                .endDate(endDate)
-                .productIds(idList)
-                .includeTrendAnalysis(true)
-                .includeForecast(false)
-                .build();
-
-        SalesAnalysisResponse response = enterpriseDataService.analyzeSales(request);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("產品對比分析 (").append(startDate).append(" - ").append(endDate).append("):\n");
-        for (var detail : response.getProductDetails()) {
-            sb.append(String.format(
-                    "%s: 銷售額 %s, 件數 %d, 市場占有率 %s%%\n",
-                    detail.getProductName(),
-                    detail.getSalesAmount(),
-                    detail.getSalesVolume(),
-                    detail.getMarketShare()));
-        }
-
-        return sb.toString();
-    }
-
-    /**
-     * 分析銷售趨勢
-     * 參數: 分類, 月數 (默認6)
-     * 返回: 趨勢分析結果
-     */
-    public String analyzeTrend(String category, int months) {
-        log.info("分析銷售趨勢: category={}, months={}", category, months);
-
-        YearMonth endDate = YearMonth.now();
-        YearMonth startDate = endDate.minusMonths(months - 1);
-
-        SalesAnalysisRequest request = SalesAnalysisRequest.builder()
-                .analysisType("TREND")
-                .startDate(startDate)
-                .endDate(endDate)
+        return CategoryStat.builder()
                 .category(category)
-                .includeTrendAnalysis(true)
-                .includeForecast(false)
+                .quantity(quantity)
+                .revenue(revenue)
+                .percentage(percentage)
                 .build();
-
-        SalesAnalysisResponse response = enterpriseDataService.analyzeSales(request);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(category).append(" 銷售趨勢分析 (最近 ").append(months).append(" 個月):\n");
-        for (var trend : response.getTrends()) {
-            sb.append(String.format("%s: %s | 金額: %s | 件數: %d | 成長率: %s%%\n",
-                    trend.getPeriod(),
-                    trend.getTrend(),
-                    trend.getSalesAmount(),
-                    trend.getSalesVolume(),
-                    trend.getGrowthRate()));
-        }
-
-        return sb.toString();
     }
 
     /**
-     * 解析年月字符串
+     * 計算占比
+     *
+     * @param value   分類數量
+     * @param allData 全部資料
+     * @return 百分比
      */
-    private YearMonth parseYearMonth(String dateStr) {
-        if (dateStr == null || dateStr.isEmpty()) {
-            return YearMonth.now();
+    private double calculatePercentage(int value, List<Product> allData) {
+        int total = allData.stream().mapToInt(Product::getQuantity).sum();
+        if (total == 0) {
+            return 0.0;
         }
+        return BigDecimal.valueOf((double) value / total * 100)
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
+    }
 
-        try {
-            if (dateStr.length() == 4) {
-                // 只有年份，使用 1 月
-                return YearMonth.of(Integer.parseInt(dateStr), 1);
-            } else if (dateStr.contains("-")) {
-                // 格式: yyyy-MM
-                String[] parts = dateStr.split("-");
-                return YearMonth.of(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-            }
-        } catch (Exception e) {
-            log.warn("無法解析日期: {}, 使用當前月份", dateStr);
+    /**
+     * 計算成長率（整數）
+     *
+     * @param oldValue 舊值
+     * @param newValue 新值
+     * @return 成長率百分比
+     */
+    private double calculateGrowthRate(int oldValue, int newValue) {
+        if (oldValue == 0) {
+            return 0.0;
         }
+        return BigDecimal.valueOf(((double) newValue - oldValue) / oldValue * 100)
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
+    }
 
-        return YearMonth.now();
+    /**
+     * 計算成長率（BigDecimal）
+     *
+     * @param oldValue 舊值
+     * @param newValue 新值
+     * @return 成長率百分比
+     */
+    private double calculateGrowthRate(BigDecimal oldValue, BigDecimal newValue) {
+        if (oldValue.compareTo(BigDecimal.ZERO) == 0) {
+            return 0.0;
+        }
+        BigDecimal diff = newValue.subtract(oldValue);
+        return diff.divide(oldValue, 4, RoundingMode.HALF_UP)
+                .multiply(new BigDecimal("100"))
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
+    }
+
+    /**
+     * 格式化金額顯示
+     *
+     * @param amount 金額
+     * @return 顯示字串
+     */
+    private String formatCurrency(BigDecimal amount) {
+        if (amount.compareTo(new BigDecimal("100000000")) >= 0) {
+            return String.format("NT$ %.1f億",
+                    amount.divide(new BigDecimal("100000000"), 1, RoundingMode.HALF_UP)
+                            .doubleValue());
+        }
+        return String.format("NT$ %,d", amount.intValue());
     }
 }

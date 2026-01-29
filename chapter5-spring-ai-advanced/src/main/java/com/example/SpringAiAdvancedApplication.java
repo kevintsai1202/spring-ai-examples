@@ -13,6 +13,11 @@ import org.springframework.ai.chat.model.ChatModel;
 @SpringBootApplication
 public class SpringAiAdvancedApplication {
 
+    /**
+     * 應用程式入口
+     *
+     * @param args 啟動參數
+     */
     public static void main(String[] args) {
         SpringApplication.run(SpringAiAdvancedApplication.class, args);
     }
