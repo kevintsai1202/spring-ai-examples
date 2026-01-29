@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * 企業 AI 控制器 - 提供企業數據工具的 REST API
- * 支持 Tool Calling 和自然語言查詢
+ * 支援 Tool Calling 和自然語言查詢
  * 用於 5.7 企業數據工具章節
  */
 @Slf4j
@@ -93,7 +93,7 @@ public class EnterpriseAiController {
      *
      * 示例:
      * {
-     *   "query": "最近6個月的銷售趨勢如何？"
+     * "query": "最近6個月的銷售趨勢如何？"
      * }
      */
     @PostMapping("/natural-query")
@@ -205,7 +205,7 @@ public class EnterpriseAiController {
         log.info("分析銷售趨勢: category={}, months={}", category, months);
 
         try {
-            // 如果 category 為空，使用默認分類
+            // 如果 category 為空，使用預設分類
             String analysisCategory = category != null && !category.isEmpty() ? category : "電子產品";
             String result = productSalesTools.analyzeTrend(analysisCategory, months);
             return ResponseEntity.ok(result);
@@ -222,8 +222,8 @@ public class EnterpriseAiController {
      *
      * 示例:
      * {
-     *   "question": "哪個產品在過去6個月中增長最快？",
-     *   "analysisType": "TREND"
+     * "question": "哪個產品在過去6個月中增長最快？",
+     * "analysisType": "TREND"
      * }
      */
     @PostMapping("/ai-analysis")
@@ -237,10 +237,9 @@ public class EnterpriseAiController {
             // 構建系統提示詞
             String systemPrompt = String.format(
                     "你是一個專業的銷售分析顧問。用戶將提出關於銷售數據的問題。" +
-                    "使用可用的企業工具來分析銷售數據，並提供專業的見解和建議。" +
-                    "分析類型: %s",
-                    analysisType != null ? analysisType : "TREND"
-            );
+                            "使用可用的企業工具來分析銷售數據，並提供專業的見解和建議。" +
+                            "分析類型: %s",
+                    analysisType != null ? analysisType : "TREND");
 
             // 使用 ChatClient 執行查詢
             String response = ChatClient.create(chatModel)

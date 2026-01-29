@@ -13,12 +13,12 @@ spring:
           stream: true
 
     # Groq 配置（可選）
-    groq:
-      api-key: ${GROQ_API_KEY}
-      base-url: https://api.groq.com/openai
-      chat:
-        options:
-          model: llama-3.1-70b-versatile
+    # groq:
+    #   api-key: ${GROQ_API_KEY}
+    #   base-url: https://api.groq.com/openai
+    #   chat:
+    #     options:
+    #       model: llama-3.1-70b-versatile
 
 # 應用程式配置
 server:

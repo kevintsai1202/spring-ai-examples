@@ -39,8 +39,8 @@ public class EnterpriseDataService {
         // 創建樣本產品
         Product p1 = Product.builder()
                 .productId("PROD001")
-                .productName("高性能筆記本電腦")
-                .description("商務用高性能筆記本")
+                .productName("高效能筆記型電腦")
+                .description("商務用高效能筆記型電腦")
                 .category("電子產品")
                 .unitPrice(new BigDecimal("15000"))
                 .stockQuantity(150)
@@ -56,7 +56,7 @@ public class EnterpriseDataService {
                 .productId("PROD002")
                 .productName("無線藍牙耳機")
                 .description("降噪無線耳機")
-                .category("音頻設備")
+                .category("音訊設備")
                 .unitPrice(new BigDecimal("2500"))
                 .stockQuantity(500)
                 .avgMonthlySales(300)
@@ -93,11 +93,11 @@ public class EnterpriseDataService {
             Map<String, Integer> monthlySales = new HashMap<>();
 
             // PROD001: 70-90 單位/月
-            monthlySales.put("PROD001", 70 + (int)(Math.random() * 20));
+            monthlySales.put("PROD001", 70 + (int) (Math.random() * 20));
             // PROD002: 250-350 單位/月
-            monthlySales.put("PROD002", 250 + (int)(Math.random() * 100));
+            monthlySales.put("PROD002", 250 + (int) (Math.random() * 100));
             // PROD003: 500-700 單位/月
-            monthlySales.put("PROD003", 500 + (int)(Math.random() * 200));
+            monthlySales.put("PROD003", 500 + (int) (Math.random() * 200));
 
             salesDatabase.put(month, monthlySales);
         }
@@ -137,10 +137,8 @@ public class EnterpriseDataService {
             throw new IllegalArgumentException("無效的分析請求參數");
         }
 
-        YearMonth startDate = request.getStartDate() != null ?
-                request.getStartDate() : YearMonth.now().minusMonths(12);
-        YearMonth endDate = request.getEndDate() != null ?
-                request.getEndDate() : YearMonth.now();
+        YearMonth startDate = request.getStartDate() != null ? request.getStartDate() : YearMonth.now().minusMonths(12);
+        YearMonth endDate = request.getEndDate() != null ? request.getEndDate() : YearMonth.now();
 
         // 獲取相關產品
         List<String> analysisProductIds = getAnalysisProductIds(request);
@@ -150,23 +148,20 @@ public class EnterpriseDataService {
 
         // 計算產品詳情
         List<ProductSalesDetail> productDetails = calculateProductDetails(
-                startDate, endDate, analysisProductIds
-        );
+                startDate, endDate, analysisProductIds);
 
         // 計算趨勢
         List<TrendData> trends = calculateTrends(startDate, endDate, analysisProductIds);
 
         // 計算預測 (如果需要)
         List<ForecastData> forecasts = request.getIncludeForecast() != null &&
-                request.getIncludeForecast() ?
-                calculateForecasts(endDate, analysisProductIds) : new ArrayList<>();
+                request.getIncludeForecast() ? calculateForecasts(endDate, analysisProductIds) : new ArrayList<>();
 
         // 生成警告提示
         List<String> alerts = generateAlerts(productDetails);
 
         return SalesAnalysisResponse.builder()
-                .analysisType(request.getAnalysisType() != null ?
-                        request.getAnalysisType() : "MONTHLY")
+                .analysisType(request.getAnalysisType() != null ? request.getAnalysisType() : "MONTHLY")
                 .period(startDate + " 到 " + endDate)
                 .startDate(startDate)
                 .endDate(endDate)
@@ -188,7 +183,7 @@ public class EnterpriseDataService {
 
         List<Product> products = productDatabase.values().stream()
                 .filter(p -> request.getCategory() == null ||
-                            p.getCategory().equals(request.getCategory()))
+                        p.getCategory().equals(request.getCategory()))
                 .collect(Collectors.toList());
 
         return products.stream()
@@ -200,12 +195,11 @@ public class EnterpriseDataService {
      * 計算摘要統計
      */
     private SummaryStats calculateSummary(YearMonth startDate, YearMonth endDate,
-                                          List<String> productIds) {
+            List<String> productIds) {
         BigDecimal totalAmount = BigDecimal.ZERO;
         int totalVolume = 0;
 
-        for (YearMonth month = startDate; !month.isAfter(endDate);
-             month = month.plusMonths(1)) {
+        for (YearMonth month = startDate; !month.isAfter(endDate); month = month.plusMonths(1)) {
             Map<String, Integer> monthlySales = salesDatabase.get(month);
             if (monthlySales != null) {
                 for (String productId : productIds) {
@@ -214,8 +208,7 @@ public class EnterpriseDataService {
                         Product product = productDatabase.get(productId);
                         if (product != null) {
                             totalAmount = totalAmount.add(
-                                    product.getUnitPrice().multiply(new BigDecimal(quantity))
-                            );
+                                    product.getUnitPrice().multiply(new BigDecimal(quantity)));
                             totalVolume += quantity;
                         }
                     }
@@ -223,17 +216,18 @@ public class EnterpriseDataService {
             }
         }
 
-        BigDecimal avgUnitPrice = totalVolume > 0 ?
-                totalAmount.divide(new BigDecimal(totalVolume), 2, RoundingMode.HALF_UP) :
-                BigDecimal.ZERO;
+        BigDecimal avgUnitPrice = totalVolume > 0
+                ? totalAmount.divide(new BigDecimal(totalVolume), 2, RoundingMode.HALF_UP)
+                : BigDecimal.ZERO;
 
-        // 簡化計算：無法實現真實的環比和同比增長
+        // 簡化計算：無法實現真實的月增率和年增率
         String topProductId = productIds.stream()
                 .findFirst()
                 .orElse("");
 
-        String topProductName = productDatabase.get(topProductId) != null ?
-                productDatabase.get(topProductId).getProductName() : "";
+        String topProductName = productDatabase.get(topProductId) != null
+                ? productDatabase.get(topProductId).getProductName()
+                : "";
 
         return SummaryStats.builder()
                 .totalSalesAmount(totalAmount)
@@ -251,14 +245,13 @@ public class EnterpriseDataService {
      * 計算產品詳情
      */
     private List<ProductSalesDetail> calculateProductDetails(YearMonth startDate,
-                                                             YearMonth endDate,
-                                                             List<String> productIds) {
+            YearMonth endDate,
+            List<String> productIds) {
         Map<String, ProductSalesDetail> detailsMap = new HashMap<>();
         BigDecimal totalSalesAmount = BigDecimal.ZERO;
 
         // 首先計算所有銷售金額
-        for (YearMonth month = startDate; !month.isAfter(endDate);
-             month = month.plusMonths(1)) {
+        for (YearMonth month = startDate; !month.isAfter(endDate); month = month.plusMonths(1)) {
             Map<String, Integer> monthlySales = salesDatabase.get(month);
             if (monthlySales != null) {
                 for (String productId : productIds) {
@@ -267,8 +260,7 @@ public class EnterpriseDataService {
                         Product product = productDatabase.get(productId);
                         if (product != null) {
                             BigDecimal saleAmount = product.getUnitPrice().multiply(
-                                    new BigDecimal(quantity)
-                            );
+                                    new BigDecimal(quantity));
 
                             detailsMap.putIfAbsent(productId, ProductSalesDetail.builder()
                                     .productId(productId)
@@ -307,7 +299,7 @@ public class EnterpriseDataService {
                         detail.setMarketShare(BigDecimal.ZERO);
                     }
 
-                    // 計算增長率 (模擬數據)
+                    // 計算成長率 (模擬數據)
                     detail.setYoyGrowth(new BigDecimal(Math.random() * 20 - 10).setScale(2, RoundingMode.HALF_UP));
                     detail.setMomGrowth(new BigDecimal(Math.random() * 15 - 7.5).setScale(2, RoundingMode.HALF_UP));
                 })
@@ -326,11 +318,10 @@ public class EnterpriseDataService {
      * 計算趨勢數據
      */
     private List<TrendData> calculateTrends(YearMonth startDate, YearMonth endDate,
-                                            List<String> productIds) {
+            List<String> productIds) {
         List<TrendData> trends = new ArrayList<>();
 
-        for (YearMonth month = startDate; !month.isAfter(endDate);
-             month = month.plusMonths(1)) {
+        for (YearMonth month = startDate; !month.isAfter(endDate); month = month.plusMonths(1)) {
             Map<String, Integer> monthlySales = salesDatabase.get(month);
             if (monthlySales != null) {
                 BigDecimal totalAmount = BigDecimal.ZERO;
@@ -342,8 +333,7 @@ public class EnterpriseDataService {
                         Product product = productDatabase.get(productId);
                         if (product != null) {
                             totalAmount = totalAmount.add(
-                                    product.getUnitPrice().multiply(new BigDecimal(quantity))
-                            );
+                                    product.getUnitPrice().multiply(new BigDecimal(quantity)));
                             totalVolume += quantity;
                         }
                     }
@@ -366,7 +356,7 @@ public class EnterpriseDataService {
      * 計算預測數據
      */
     private List<ForecastData> calculateForecasts(YearMonth startDate,
-                                                  List<String> productIds) {
+            List<String> productIds) {
         List<ForecastData> forecasts = new ArrayList<>();
 
         for (int i = 1; i <= 3; i++) {
@@ -376,7 +366,7 @@ public class EnterpriseDataService {
             forecasts.add(ForecastData.builder()
                     .forecastPeriod(forecastMonth)
                     .forecastedSalesAmount(forecastedAmount)
-                    .forecastedVolume((int)(Math.random() * 1000 + 500))
+                    .forecastedVolume((int) (Math.random() * 1000 + 500))
                     .confidence(new BigDecimal(75 + Math.random() * 20))
                     .description("基於趨勢分析的預測")
                     .build());
@@ -406,7 +396,7 @@ public class EnterpriseDataService {
     }
 
     /**
-     * 解析，用於流式輸出計算
+     * 解析，用於串流輸出計算
      */
     private static void setRanking(List<ProductSalesDetail> list) {
         for (int i = 0; i < list.size(); i++) {

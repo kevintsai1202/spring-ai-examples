@@ -6,8 +6,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * 产品分析响应 DTO
- * 用于 Tool 链控制器返回的产品分析结果
+ * 產品分析回應 DTO
+ * 用於 Tool 鏈控制器返回的產品分析結果
  */
 @Data
 @Builder
@@ -15,21 +15,21 @@ public class ProductAnalysisResponse {
     /** 分析是否成功 */
     private boolean success;
 
-    /** 产品代码 */
+    /** 產品代碼 */
     private String productCode;
 
-    /** 分析类型 */
+    /** 分析類型 */
     private String analysisType;
 
-    /** 详细分析结果 */
+    /** 詳細分析結果 */
     private String analysis;
 
-    /** 执行耗时（毫秒） */
+    /** 執行耗時（毫秒） */
     private Long executionTime;
 
-    /** 错误信息（失败时） */
+    /** 錯誤資訊（失敗時） */
     private String error;
 
-    /** 时间戳 */
+    /** 時間戳記 */
     private LocalDateTime timestamp;
 }

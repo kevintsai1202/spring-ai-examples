@@ -35,14 +35,14 @@ public class WeatherTools {
 
             return String.format(
                     "%s 當前天氣:\n" +
-                    "溫度: %.1f°C (體感 %.1f°C)\n" +
-                    "天氣狀況: %s\n" +
-                    "濕度: %d%%\n" +
-                    "風速: %.1f m/s (%s)\n" +
-                    "氣壓: %d hPa\n" +
-                    "能見度: %.1f km\n" +
-                    "降水概率: %d%%\n" +
-                    "紫外線指數: %d",
+                            "溫度: %.1f°C (體感 %.1f°C)\n" +
+                            "天氣狀況: %s\n" +
+                            "濕度: %d%%\n" +
+                            "風速: %.1f m/s (%s)\n" +
+                            "氣壓: %d hPa\n" +
+                            "能見度: %.1f km\n" +
+                            "降雨機率: %d%%\n" +
+                            "紫外線指數: %d",
                     cityName,
                     current.getTemperature(),
                     current.getFeelsLike(),
@@ -53,8 +53,7 @@ public class WeatherTools {
                     current.getPressure(),
                     current.getVisibility(),
                     current.getPrecipitationProbability(),
-                    current.getUvIndex()
-            );
+                    current.getUvIndex());
         } catch (Exception e) {
             log.error("查詢天氣失敗", e);
             return "無法獲取 " + cityName + " 的天氣數據";
@@ -99,11 +98,11 @@ public class WeatherTools {
             for (DailyForecast forecast : forecasts) {
                 sb.append(String.format(
                         "【%s】\n" +
-                        "高溫: %.1f°C 低溫: %.1f°C\n" +
-                        "白天: %s 夜晚: %s\n" +
-                        "降雨機率: %d%%\n" +
-                        "風速: %.1f m/s\n" +
-                        "建議: %s\n\n",
+                                "高溫: %.1f°C 低溫: %.1f°C\n" +
+                                "白天: %s 夜晚: %s\n" +
+                                "降雨機率: %d%%\n" +
+                                "風速: %.1f m/s\n" +
+                                "建議: %s\n\n",
                         forecast.getForecastDate(),
                         forecast.getMaxTemperature(),
                         forecast.getMinTemperature(),
@@ -111,8 +110,7 @@ public class WeatherTools {
                         forecast.getNightCondition(),
                         forecast.getPrecipitationProbability(),
                         forecast.getMaxWindSpeed(),
-                        forecast.getRecommendation()
-                ));
+                        forecast.getRecommendation()));
             }
 
             return sb.toString();
@@ -200,16 +198,15 @@ public class WeatherTools {
             for (WeatherAlert alert : weatherData.getAlerts()) {
                 sb.append(String.format(
                         "【%s】%s\n" +
-                        "內容: %s\n" +
-                        "生效期限: %s 至 %s\n" +
-                        "發布單位: %s\n\n",
+                                "內容: %s\n" +
+                                "生效期限: %s 至 %s\n" +
+                                "發布單位: %s\n\n",
                         alert.getAlertType(),
                         alert.getAlertLevel(),
                         alert.getContent(),
                         alert.getEffectiveTime(),
                         alert.getExpiryTime(),
-                        alert.getIssuedBy()
-                ));
+                        alert.getIssuedBy()));
             }
 
             return sb.toString();
@@ -233,17 +230,16 @@ public class WeatherTools {
 
             return String.format(
                     "坐標 (%.4f, %.4f) 的天氣:\n" +
-                    "溫度: %.1f°C\n" +
-                    "天氣狀況: %s\n" +
-                    "風速: %.1f m/s\n" +
-                    "濕度: %d%%",
+                            "溫度: %.1f°C\n" +
+                            "天氣狀況: %s\n" +
+                            "風速: %.1f m/s\n" +
+                            "濕度: %d%%",
                     latitude,
                     longitude,
                     current.getTemperature(),
                     current.getCondition(),
                     current.getWindSpeed(),
-                    current.getHumidity()
-            );
+                    current.getHumidity());
         } catch (Exception e) {
             log.error("查詢失敗", e);
             return "無法獲取該坐標的天氣信息";
@@ -266,13 +262,13 @@ public class WeatherTools {
                 if (forecast.getForecastDate().equals(date)) {
                     return String.format(
                             "%s 於 %s 的天氣預測:\n" +
-                            "高溫: %.1f°C 低溫: %.1f°C\n" +
-                            "白天: %s | 夜晚: %s\n" +
-                            "降雨機率: %d%%\n" +
-                            "風速: %.1f m/s\n" +
-                            "濕度: %d-%d%%\n" +
-                            "紫外線: %d\n" +
-                            "建議: %s",
+                                    "高溫: %.1f°C 低溫: %.1f°C\n" +
+                                    "白天: %s | 夜晚: %s\n" +
+                                    "降雨機率: %d%%\n" +
+                                    "風速: %.1f m/s\n" +
+                                    "濕度: %d-%d%%\n" +
+                                    "紫外線: %d\n" +
+                                    "建議: %s",
                             cityName, date,
                             forecast.getMaxTemperature(),
                             forecast.getMinTemperature(),
@@ -283,8 +279,7 @@ public class WeatherTools {
                             forecast.getMinHumidity(),
                             forecast.getMaxHumidity(),
                             forecast.getUvIndex(),
-                            forecast.getRecommendation()
-                    );
+                            forecast.getRecommendation());
                 }
             }
 

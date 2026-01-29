@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 产品详情工具 - 用于 Tool 链调用
- * 提供产品型号和规格查询功能
+ * 產品詳情工具 - 用於 Tool 鏈呼叫
+ * 提供產品型號和規格查詢功能
  */
 @Component
 @Slf4j
@@ -22,8 +22,8 @@ public class ProductDetailsTools {
             String productName,
             List<String> models,
             String category,
-            String description
-    ) {}
+            String description) {
+    }
 
     /**
      * 产品型号数据模型
@@ -33,11 +33,12 @@ public class ProductDetailsTools {
             String modelName,
             String specifications,
             String price,
-            String availability
-    ) {}
+            String availability) {
+    }
 
     /**
      * 根据产品名称获取产品型号列表
+     * 
      * @param product 产品代码或名称
      * @return 产品详情包含所有型号
      */
@@ -47,49 +48,42 @@ public class ProductDetailsTools {
 
             // 模拟企业产品资料库
             Map<String, ProductDetail> productDatabase = Map.of(
-                "PD-1405", new ProductDetail(
-                    "PD-1405",
-                    "智能手机 Pro 系列",
-                    List.of("1405-001", "1405-002", "1405-003", "1405-004"),
-                    "智能手机",
-                    "高端智能手机系列，支持 5G 和 AI 摄影"
-                ),
-                "PD-1234", new ProductDetail(
-                    "PD-1234",
-                    "笔记型电脑 Ultra 系列",
-                    List.of("1234-1", "1234-2", "1234-3", "1234-4", "1234-5"),
-                    "笔记型电脑",
-                    "轻薄高效能笔记型电脑，适合商务和创作"
-                ),
-                "PD-1235", new ProductDetail(
-                    "PD-1235",
-                    "平板电脑系列",
-                    List.of("1235-4", "1235-5", "1235-6"),
-                    "平板电脑",
-                    "多功能平板电脑，支持手写笔和键盘"
-                ),
-                "PD-1385", new ProductDetail(
-                    "PD-1385",
-                    "智能手表系列",
-                    List.of("1385-1", "1385-2", "1385-3", "1385-4"),
-                    "穿戴装置",
-                    "健康监测智能手表，支持运动追踪和心率监测"
-                ),
-                "PD-1255", new ProductDetail(
-                    "PD-1255",
-                    "无线耳机系列",
-                    List.of("1255-1", "1255-2"),
-                    "音响设备",
-                    "主动降噪无线耳机，高品质音效体验"
-                ),
-                "PD-1300", new ProductDetail(
-                    "PD-1300",
-                    "智能音箱系列",
-                    List.of("1300-1", "1300-2", "1300-3"),
-                    "智能家居",
-                    "AI 语音助手智能音箱，支持智能家居控制"
-                )
-            );
+                    "PD-1405", new ProductDetail(
+                            "PD-1405",
+                            "智慧型手機 Pro 系列",
+                            List.of("1405-001", "1405-002", "1405-003", "1405-004"),
+                            "智慧型手機",
+                            "高階智慧型手機系列，支援 5G 和 AI 攝影"),
+                    "PD-1234", new ProductDetail(
+                            "PD-1234",
+                            "笔记型电脑 Ultra 系列",
+                            List.of("1234-1", "1234-2", "1234-3", "1234-4", "1234-5"),
+                            "笔记型电脑",
+                            "轻薄高效能笔记型电脑，适合商务和创作"),
+                    "PD-1235", new ProductDetail(
+                            "PD-1235",
+                            "平板电脑系列",
+                            List.of("1235-4", "1235-5", "1235-6"),
+                            "平板电脑",
+                            "多功能平板电脑，支持手写笔和键盘"),
+                    "PD-1385", new ProductDetail(
+                            "PD-1385",
+                            "智慧手錶系列",
+                            List.of("1385-1", "1385-2", "1385-3", "1385-4"),
+                            "穿戴裝置",
+                            "健康監測智慧手錶，支援運動追蹤和心率監測"),
+                    "PD-1255", new ProductDetail(
+                            "PD-1255",
+                            "無線耳機系列",
+                            List.of("1255-1", "1255-2"),
+                            "音響設備",
+                            "主動降噪無線耳機，高品質音效體驗"),
+                    "PD-1300", new ProductDetail(
+                            "PD-1300",
+                            "智慧音箱系列",
+                            List.of("1300-1", "1300-2", "1300-3"),
+                            "智慧家庭",
+                            "AI 語音助理智慧音箱，支援智慧家庭控制"));
 
             ProductDetail result = productDatabase.get(product);
             if (result == null) {
@@ -102,8 +96,7 @@ public class ProductDetailsTools {
                                 "未知产品",
                                 List.of("无此产品型号"),
                                 "未分类",
-                                "查无此产品信息"
-                        ));
+                                "查无此产品信息"));
             }
 
             log.info("查询完成，产品：{}，型号数量：{}",
@@ -118,15 +111,15 @@ public class ProductDetailsTools {
                     "查询失败",
                     List.of("系统错误"),
                     "错误",
-                    "查询产品信息时发生错误：" + e.getMessage()
-            );
+                    "查询产品信息时发生错误：" + e.getMessage());
         }
     }
 
     /**
      * 获取特定型号的详细规格
+     * 
      * @param productCode 产品代码
-     * @param modelCode 型号代码
+     * @param modelCode   型号代码
      * @return 型号详细信息
      */
     public ProductModel getModelSpecifications(String productCode, String modelCode) {
@@ -140,32 +133,28 @@ public class ProductDetailsTools {
             ProductModel model = switch (productCode) {
                 case "PD-1405" -> new ProductModel(
                         modelCode,
-                        "智能手机 Pro " + modelCode,
+                        "智慧型手機 Pro " + modelCode,
                         generatePhoneSpecs(modelCode),
                         generatePrice("phone", modelCode),
-                        "现货供应"
-                );
+                        "現貨供應");
                 case "PD-1234" -> new ProductModel(
                         modelCode,
-                        "笔记型电脑 Ultra " + modelCode,
+                        "筆記型電腦 Ultra " + modelCode,
                         generateLaptopSpecs(modelCode),
                         generatePrice("laptop", modelCode),
-                        "现货供应"
-                );
+                        "現貨供應");
                 case "PD-1385" -> new ProductModel(
                         modelCode,
-                        "智能手表 " + modelCode,
+                        "智慧手錶 " + modelCode,
                         generateWatchSpecs(modelCode),
                         generatePrice("watch", modelCode),
-                        "现货供应"
-                );
+                        "現貨供應");
                 default -> new ProductModel(
                         modelCode,
-                        "产品型号 " + modelCode,
-                        "标准规格",
-                        "价格面议",
-                        "请洽询"
-                );
+                        "產品型號 " + modelCode,
+                        "標準規格",
+                        "價格面議",
+                        "請洽詢");
             };
 
             log.info("型号规格查询完成：{}", model.modelName());
@@ -178,18 +167,17 @@ public class ProductDetailsTools {
                     "查询失败",
                     "无法获取规格信息",
                     "价格未知",
-                    "查询错误"
-            );
+                    "查询错误");
         }
     }
 
     private String generatePhoneSpecs(String modelCode) {
         return switch (modelCode) {
-            case "1405-001" -> "6.1吋 OLED 屏幕, 128GB 存储, 双镜头";
-            case "1405-002" -> "6.1吋 OLED 屏幕, 256GB 存储, 三镜头";
-            case "1405-003" -> "6.7吋 OLED 屏幕, 512GB 存储, 三镜头 Pro";
-            case "1405-004" -> "6.7吋 OLED 屏幕, 1TB 存储, 四镜头 Pro Max";
-            default -> "标准智能手机规格";
+            case "1405-001" -> "6.1吋 OLED 螢幕, 128GB 儲存, 雙鏡頭";
+            case "1405-002" -> "6.1吋 OLED 螢幕, 256GB 儲存, 三鏡頭";
+            case "1405-003" -> "6.7吋 OLED 螢幕, 512GB 儲存, 三鏡頭 Pro";
+            case "1405-004" -> "6.7吋 OLED 螢幕, 1TB 儲存, 四鏡頭 Pro Max";
+            default -> "標準智慧型手機規格";
         };
     }
 

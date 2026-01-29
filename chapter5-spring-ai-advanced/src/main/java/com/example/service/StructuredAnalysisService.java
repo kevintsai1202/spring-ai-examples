@@ -24,6 +24,7 @@ public class StructuredAnalysisService {
 
     /**
      * 銷售資料分析
+     * 
      * @param salesData 銷售資料
      * @return 結構化分析結果
      */
@@ -32,13 +33,14 @@ public class StructuredAnalysisService {
             log.info("開始銷售資料分析");
 
             String userMessage = String.format(
-                "分析以下銷售資料並提供洞察：\n%s\n\n" +
-                "請提供結構化的分析，包括：\n" +
-                "1. 銷售趨勢分析\n" +
-                "2. 產品表現評估\n" +
-                "3. 市場機會識別\n" +
-                "4. 改進建議\n" +
-                "5. 風險評估", salesData);
+                    "分析以下銷售資料並提供洞察：\n%s\n\n" +
+                            "請提供結構化的分析，包括：\n" +
+                            "1. 銷售趨勢分析\n" +
+                            "2. 產品表現評估\n" +
+                            "3. 市場機會識別\n" +
+                            "4. 改進建議\n" +
+                            "5. 風險評估",
+                    salesData);
 
             SalesAnalysisResult result = ChatClient.create(chatModel)
                     .prompt()
@@ -59,6 +61,7 @@ public class StructuredAnalysisService {
 
     /**
      * 客戶行為分析
+     * 
      * @param customerData 客戶資料
      * @return 客戶洞察
      */
@@ -67,13 +70,14 @@ public class StructuredAnalysisService {
             log.info("開始客戶行為分析，資料筆數：{}", customerData.size());
 
             String userMessage = String.format(
-                "分析以下客戶行為資料：\n%s\n\n" +
-                "請提供結構化的客戶洞察，包括：\n" +
-                "1. 客戶細分\n" +
-                "2. 行為模式\n" +
-                "3. 偏好分析\n" +
-                "4. 流失風險\n" +
-                "5. 個性化建議", customerData);
+                    "分析以下客戶行為資料：\n%s\n\n" +
+                            "請提供結構化的客戶洞察，包括：\n" +
+                            "1. 客戶細分\n" +
+                            "2. 行為模式\n" +
+                            "3. 偏好分析\n" +
+                            "4. 流失風險\n" +
+                            "5. 個人化建議",
+                    customerData);
 
             CustomerInsights result = ChatClient.create(chatModel)
                     .prompt()
@@ -95,8 +99,9 @@ public class StructuredAnalysisService {
 
     /**
      * 市場趨勢預測
+     * 
      * @param marketData 市場資料
-     * @param timeframe 預測時間範圍
+     * @param timeframe  預測時間範圍
      * @return 市場預測結果
      */
     public MarketForecast predictMarketTrends(Map<String, Object> marketData, String timeframe) {
@@ -104,13 +109,14 @@ public class StructuredAnalysisService {
             log.info("開始市場趨勢預測，時間範圍：{}", timeframe);
 
             String userMessage = String.format(
-                "基於以下市場資料預測 %s 的市場趨勢：\n%s\n\n" +
-                "請提供結構化的預測結果，包括：\n" +
-                "1. 整體市場趨勢\n" +
-                "2. 關鍵指標預測\n" +
-                "3. 機會與威脅\n" +
-                "4. 策略建議\n" +
-                "5. 預測信心度", timeframe, marketData);
+                    "基於以下市場資料預測 %s 的市場趨勢：\n%s\n\n" +
+                            "請提供結構化的預測結果，包括：\n" +
+                            "1. 整體市場趨勢\n" +
+                            "2. 關鍵指標預測\n" +
+                            "3. 機會與威脅\n" +
+                            "4. 策略建議\n" +
+                            "5. 預測信心度",
+                    timeframe, marketData);
 
             MarketForecast result = ChatClient.create(chatModel)
                     .prompt()

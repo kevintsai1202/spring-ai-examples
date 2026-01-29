@@ -6,16 +6,15 @@ import java.util.List;
 
 /**
  * 產品推薦列表
- * 用于表示一组推荐的产品
+ * 用於表示一組推薦的產品
  */
 public record ProductRecommendations(
         @JsonProperty("category") String category,
         @JsonProperty("count") int count,
         @JsonProperty("products") List<ProductItem> products,
-        @JsonProperty("error") String error
-) {
+        @JsonProperty("error") String error) {
     /**
-     * 便捷构造函数（不包含error字段）
+     * 便捷建構子（不包含error欄位）
      */
     public ProductRecommendations(String category, int count, List<ProductItem> products) {
         this(category, count, products, null);
@@ -30,5 +29,5 @@ record ProductItem(
         @JsonProperty("brand") String brand,
         @JsonProperty("price") double price,
         @JsonProperty("rating") double rating,
-        @JsonProperty("description") String description
-) {}
+        @JsonProperty("description") String description) {
+}

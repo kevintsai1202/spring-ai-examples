@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 銷售分析響應 DTO - 用於 5.7 企業數據工具
+ * 銷售分析回應 DTO - 用於 5.7 企業數據工具
  * 包含詳細的銷售分析結果
  */
 @Data
@@ -23,7 +23,7 @@ public class SalesAnalysisResponse {
     /** 分析類型 */
     private String analysisType;
 
-    /** 分析周期 */
+    /** 分析週期 */
     private String period;
 
     /** 開始日期 */
@@ -109,7 +109,7 @@ public class SalesAnalysisResponse {
         /** 排名 */
         private Integer ranking;
 
-        /** 市場占有率 (%) */
+        /** 市場佔有率 (%) */
         private BigDecimal marketShare;
 
         /** 同比增長 (%) */
@@ -127,7 +127,7 @@ public class SalesAnalysisResponse {
     @AllArgsConstructor
     @Builder
     public static class TrendData {
-        /** 時間周期 */
+        /** 時間週期 */
         private YearMonth period;
 
         /** 銷售額 */
@@ -163,7 +163,7 @@ public class SalesAnalysisResponse {
         /** 預測準確度 (%) */
         private BigDecimal confidence;
 
-        /** 預測説明 */
+        /** 預測說明 */
         private String description;
     }
 }

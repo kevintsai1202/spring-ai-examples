@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Tool 链调用控制器
- * 实现复杂的工具链调用功能（5.8 章节）
+ * Tool 工具鏈呼叫控制器
+ * 實現複雜的工具鏈呼叫功能（5.8 章節）
  */
 @RestController
 @RequestMapping("/api/tool-chain")
@@ -30,18 +30,19 @@ public class ToolChainController {
     private final CalculatorTools calculatorTools;
 
     /**
-     * 复杂工具链查询
-     * @param prompt 自然语言查询
-     * @return AI 分析结果
+     * 複雜工具鏈查詢
+     * 
+     * @param prompt 自然語言查詢
+     * @return AI 分析結果
      */
     @GetMapping("/complex-query")
     public String complexQuery(@RequestParam String prompt) {
         try {
-            log.info("收到复杂工具链查询：{}", prompt);
+            log.info("收到複雜工具鏈查詢：{}", prompt);
 
             long startTime = System.currentTimeMillis();
 
-            // 创建支持工具链的 ChatClient
+            // 建立支援工具鏈的 ChatClient
             ChatClient toolChainClient = ChatClient.create(chatModel);
 
             String response = toolChainClient
@@ -51,33 +52,34 @@ public class ToolChainController {
 
             long endTime = System.currentTimeMillis();
 
-            log.info("复杂查询完成，耗时：{}ms，响应长度：{} 字符",
+            log.info("複雜查詢完成，耗時：{}ms，回應長度：{} 字元",
                     endTime - startTime, response.length());
 
             return response;
 
         } catch (Exception e) {
-            log.error("复杂工具链查询失败：{}", prompt, e);
-            return "查询失败：" + e.getMessage();
+            log.error("複雜工具鏈查詢失敗：{}", prompt, e);
+            return "查詢失敗：" + e.getMessage();
         }
     }
 
     /**
-     * 产品深度分析
-     * @param request 分析请求
-     * @return 详细分析报告
+     * 產品深度分析
+     * 
+     * @param request 分析請求
+     * @return 詳細分析報告
      */
     @PostMapping("/product-analysis")
     public ProductAnalysisResponse productAnalysis(@RequestBody ProductAnalysisRequest request) {
         try {
-            log.info("产品深度分析请求：{}", request);
+            log.info("產品深度分析請求：{}", request);
 
             long startTime = System.currentTimeMillis();
 
-            // 构建分析提示词
+            // 構建分析提示詞
             String prompt = buildAnalysisPrompt(request);
 
-            // 创建支持工具链的 ChatClient
+            // 建立支援工具鏈的 ChatClient
             ChatClient analysisClient = ChatClient.create(chatModel);
 
             String analysis = analysisClient
@@ -97,7 +99,7 @@ public class ToolChainController {
                     .build();
 
         } catch (Exception e) {
-            log.error("产品深度分析失败", e);
+            log.error("產品深度分析失敗", e);
 
             return ProductAnalysisResponse.builder()
                     .success(false)
@@ -109,21 +111,22 @@ public class ToolChainController {
     }
 
     /**
-     * 工具链执行追踪
+     * 工具鏈執行追蹤
+     * 
      * @param prompt 查询内容
-     * @return 执行追踪信息
+     * @return 執行追蹤資訊
      */
     @GetMapping("/trace")
     public Map<String, Object> traceExecution(@RequestParam String prompt) {
         try {
-            log.info("工具链执行追踪：{}", prompt);
+            log.info("工具鏈執行追蹤：{}", prompt);
 
             long startTime = System.currentTimeMillis();
 
-            // 创建支持工具链的 ChatClient
+            // 建立支援工具鏈的 ChatClient
             ChatClient traceClient = ChatClient.create(chatModel);
 
-            // 这里可以添加工具调用追踪逻辑
+            // 這裡可以添加工具呼叫追蹤邏輯
             String response = traceClient
                     .prompt(prompt)
                     .call()
@@ -132,47 +135,44 @@ public class ToolChainController {
             long endTime = System.currentTimeMillis();
 
             return Map.of(
-                "prompt", prompt,
-                "response", response,
-                "executionTime", endTime - startTime,
-                "toolsUsed", List.of("EnhancedSalesTools", "ProductDetailsTools"),
-                "timestamp", LocalDateTime.now()
-            );
+                    "prompt", prompt,
+                    "response", response,
+                    "executionTime", endTime - startTime,
+                    "toolsUsed", List.of("EnhancedSalesTools", "ProductDetailsTools"),
+                    "timestamp", LocalDateTime.now());
 
         } catch (Exception e) {
-            log.error("工具链执行追踪失败", e);
+            log.error("工具鏈執行追蹤失敗", e);
             return Map.of(
-                "error", e.getMessage(),
-                "timestamp", LocalDateTime.now()
-            );
+                    "error", e.getMessage(),
+                    "timestamp", LocalDateTime.now());
         }
     }
 
     /**
-     * 销售排行分析
-     * 场景 1：查询最热销产品及其详细信息
+     * 銷售排行分析
+     * 場景 1：查詢最熱銷產品及其詳細資訊
      */
     @GetMapping("/best-seller-analysis")
     public String bestSellerAnalysis(@RequestParam(defaultValue = "2024") int year) {
         try {
             String prompt = String.format(
-                "请分析 %d 年最热销的产品，并列出该产品所有型号的详细规格和价格。" +
-                "请提供完整的产品分析报告，包括销售数据、产品线覆盖和商业建议。",
-                year
-            );
+                    "請分析 %d 年最熱銷的產品，並列出該產品所有型號的詳細規格和價格。" +
+                            "請提供完整的產品分析報告，包括銷售數據、產品線覆蓋和商業建議。",
+                    year);
 
-            log.info("最热销产品分析：{}", year);
+            log.info("最熱銷產品分析：{}", year);
             return complexQuery(prompt);
 
         } catch (Exception e) {
-            log.error("最热销产品分析失败", e);
-            return "分析失败：" + e.getMessage();
+            log.error("最熱銷產品分析失敗", e);
+            return "分析失敗：" + e.getMessage();
         }
     }
 
     /**
-     * 竞品比较分析
-     * 场景 2：比较多个产品的销售表现
+     * 競品比較分析
+     * 場景 2：比較多個產品的銷售表現
      */
     @GetMapping("/competitor-analysis")
     public String competitorAnalysis(
@@ -181,100 +181,97 @@ public class ToolChainController {
         try {
             String productList = products.replace(",", "、");
             String prompt = String.format(
-                "请比较 %d 年 %s 这些产品的销售表现，并分析各自的产品优势。" +
-                "请提供详细的对比分析、市场占有率评估和竞争优势分析。",
-                year, productList
-            );
+                    "請比較 %d 年 %s 這些產品的銷售表現，並分析各自的產品優勢。" +
+                            "請提供詳細的對比分析、市場佔有率評估和競爭優勢分析。",
+                    year, productList);
 
-            log.info("竞品分析：{}年，产品：{}", year, products);
+            log.info("競品分析：{}年，產品：{}", year, products);
             return complexQuery(prompt);
 
         } catch (Exception e) {
-            log.error("竞品分析失败", e);
-            return "分析失败：" + e.getMessage();
+            log.error("競品分析失敗", e);
+            return "分析失敗：" + e.getMessage();
         }
     }
 
     /**
-     * 产品线优化建议
-     * 查询产品详情并提供优化建议
+     * 產品線優化建議
+     * 查詢產品詳情並提供優化建議
      */
     @GetMapping("/product-optimization")
     public String productOptimization(@RequestParam String productCode) {
         try {
             String prompt = String.format(
-                "请详细分析产品代码 %s 的产品线。" +
-                "1. 列出所有型号及规格\n" +
-                "2. 分析价格分层\n" +
-                "3. 评估产品线完整性\n" +
-                "4. 提供优化建议",
-                productCode
-            );
+                    "請詳細分析產品代碼 %s 的產品線。" +
+                            "1. 列出所有型號及規格\n" +
+                            "2. 分析價格分層\n" +
+                            "3. 評估產品線完整性\n" +
+                            "4. 提供優化建議",
+                    productCode);
 
-            log.info("产品线优化分析：{}", productCode);
+            log.info("產品線優化分析：{}", productCode);
             return complexQuery(prompt);
 
         } catch (Exception e) {
-            log.error("产品线优化分析失败", e);
-            return "分析失败：" + e.getMessage();
+            log.error("產品線優化分析失敗", e);
+            return "分析失敗：" + e.getMessage();
         }
     }
 
     /**
-     * 市场份额分析
+     * 市場佔有率分析
      */
     @GetMapping("/market-share-analysis")
     public String marketShareAnalysis(@RequestParam(defaultValue = "2024") int year) {
         try {
             String prompt = String.format(
-                "请进行 %d 年的市场份额分析。\n" +
-                "1. 列出各产品的销售量和营收\n" +
-                "2. 计算市场占有率\n" +
-                "3. 分析市场分布\n" +
-                "4. 提供市场趋势见解",
-                year
-            );
+                    "請進行 %d 年的市场佔有率分析。\n" +
+                            "1. 列出各產品的銷售量和營收\n" +
+                            "2. 計算市場佔有率\n" +
+                            "3. 分析市場分佈\n" +
+                            "4. 提供市場趨勢見解",
+                    year);
 
-            log.info("市场份额分析：{}", year);
+            log.info("市場佔有率分析：{}", year);
             return complexQuery(prompt);
 
         } catch (Exception e) {
-            log.error("市场份额分析失败", e);
-            return "分析失败：" + e.getMessage();
+            log.error("市場佔有率分析失敗", e);
+            return "分析失敗：" + e.getMessage();
         }
     }
 
     private String buildAnalysisPrompt(ProductAnalysisRequest request) {
         StringBuilder prompt = new StringBuilder();
 
-        prompt.append("请进行深度产品分析：\n");
-        prompt.append("产品代码：").append(request.getProductCode()).append("\n");
-        prompt.append("分析类型：").append(request.getAnalysisType()).append("\n");
+        prompt.append("請進行深度產品分析：\n");
+        prompt.append("產品代碼：").append(request.getProductCode()).append("\n");
+        prompt.append("分析類型：").append(request.getAnalysisType()).append("\n");
 
         if (request.getYear() != null) {
             prompt.append("分析年份：").append(request.getYear()).append("\n");
         }
 
-        prompt.append("\n请提供：\n");
+        prompt.append("\n請提供：\n");
 
         switch (request.getAnalysisType()) {
             case "comprehensive" -> {
-                prompt.append("1. 产品销售表现分析\n");
-                prompt.append("2. 所有产品型号详细信息\n");
-                prompt.append("3. 市场竞争力评估\n");
-                prompt.append("4. 改进建议和策略\n");
+                prompt.append("1. 產品銷售表現分析\n");
+                prompt.append("2. 所有產品型號詳細資訊\n");
+                prompt.append("3. 市場競爭力評估\n");
+                prompt.append("4. 改進建議和策略\n");
             }
             case "sales" -> {
-                prompt.append("1. 详细销售数据分析\n");
-                prompt.append("2. 销售趋势和模式\n");
-                prompt.append("3. 市场占有率分析\n");
+                prompt.append("1. 詳細銷售數據分析\n");
+                prompt.append("2. 銷售趨勢和模式\n");
+                prompt.append("3. 市場佔有率分析\n");
             }
             case "product" -> {
-                prompt.append("1. 产品型号完整信息\n");
-                prompt.append("2. 规格和定价分析\n");
-                prompt.append("3. 产品线优化建议\n");
+                prompt.append("1. 產品型號完整資訊\n");
+                prompt.append("2. 規格和定價分析\n");
+                prompt.append("3. 產品線優化建議\n");
             }
-            default -> prompt.append("1. 全面产品分析\n");
+            default -> prompt.append("1. 全面產品分析\n");
         }
 
         return prompt.toString();

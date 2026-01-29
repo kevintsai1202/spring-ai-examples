@@ -47,13 +47,13 @@ public class ToolCallingController {
      * V1 版本：計算工具
      * GET /api/v1/tools/calculate?expression=10+5
      *
-     * 支持的運算符：+ - * /
+     * 支援的運算子：+ - * /
      */
     @GetMapping("/v1/tools/calculate")
     public ResponseEntity<String> calculate(@RequestParam String expression) {
         log.info("執行計算: {}", expression);
         try {
-            // 簡單的表達式計算
+            // 簡單的運算式計算
             String result = evaluateExpression(expression);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
@@ -71,11 +71,11 @@ public class ToolCallingController {
             // 移除空格
             expression = expression.replaceAll("\\s", "");
 
-            // 簡單的遞歸下降解析器
+            // 簡單的遞迴下降解析器
             double result = parseExpression(expression);
             return "計算結果: " + expression + " = " + result;
         } catch (Exception e) {
-            throw new RuntimeException("無效的表達式: " + expression);
+            throw new RuntimeException("無效的運算式: " + expression);
         }
     }
 
@@ -113,6 +113,7 @@ public class ToolCallingController {
 
     /**
      * 基礎 Tool Calling 示例 (原路由)
+     * 
      * @param prompt 使用者提示詞
      * @return AI 回應
      */
@@ -137,7 +138,8 @@ public class ToolCallingController {
     }
 
     /**
-     * 時間查詢示例 (原路由)
+     * 時間查詢範例 (原路由)
+     * 
      * @param format 時間格式
      * @return 當前時間
      */

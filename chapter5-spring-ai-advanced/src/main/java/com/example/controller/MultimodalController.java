@@ -24,7 +24,8 @@ public class MultimodalController {
 
     /**
      * 基礎圖片分析
-     * @param file 上傳的圖片檔案
+     * 
+     * @param file    上傳的圖片檔案
      * @param message 分析要求
      * @return AI 分析結果
      */
@@ -36,30 +37,30 @@ public class MultimodalController {
         try {
             // 驗證檔案類型
             if (!isValidImageFile(file)) {
-                return "Not supported image format";
+                return "不支援的圖片格式";
             }
 
             // 驗證檔案大小（限制 10MB）
             if (file.getSize() > 10 * 1024 * 1024) {
-                return "File size exceeds 10MB limit";
+                return "檔案大小超過 10MB 限制";
             }
 
-            log.info("Start analyzing image: {}, size: {} bytes", file.getOriginalFilename(), file.getSize());
+            log.info("開始分析圖片：{}, 大小：{} bytes", file.getOriginalFilename(), file.getSize());
 
             // 使用 ChatClient 進行圖片分析
             String response = chatClient.prompt()
                     .user(u -> u.text(message)
                             .media(MimeTypeUtils.parseMimeType(file.getContentType()),
-                                   file.getResource()))
+                                    file.getResource()))
                     .call()
                     .content();
 
-            log.info("Image analysis completed");
+            log.info("圖片分析完成");
             return response;
 
         } catch (Exception e) {
-            log.error("Image processing failed", e);
-            return "Failed to process image: " + e.getMessage();
+            log.error("圖片處理失敗", e);
+            return "處理圖片失敗：" + e.getMessage();
         }
     }
 
@@ -68,11 +69,9 @@ public class MultimodalController {
      */
     private boolean isValidImageFile(MultipartFile file) {
         String contentType = file.getContentType();
-        return contentType != null && (
-            contentType.equals("image/jpeg") ||
-            contentType.equals("image/png") ||
-            contentType.equals("image/gif") ||
-            contentType.equals("image/webp")
-        );
+        return contentType != null && (contentType.equals("image/jpeg") ||
+                contentType.equals("image/png") ||
+                contentType.equals("image/gif") ||
+                contentType.equals("image/webp"));
     }
 }

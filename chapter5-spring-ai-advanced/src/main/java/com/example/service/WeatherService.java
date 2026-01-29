@@ -10,9 +10,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
- * 天氣服務 - 用於 5.9 天氣 API 集成
+ * 天氣服務 - 用於 5.9 天氣 API 整合
  * 提供台灣地區的天氣預報查詢功能
- * 實現數據緩存和模擬 API 調用
+ * 實現數據快取和模擬 API 呼叫
  */
 @Slf4j
 @Service
@@ -21,10 +21,10 @@ public class WeatherService {
     /** 城市坐標映射 */
     private static final Map<String, WeatherLocation> CITIES = new HashMap<>();
 
-    /** 天氣數據緩存 */
+    /** 天氣數據快取 */
     private final Map<String, WeatherCacheEntry> weatherCache = new HashMap<>();
 
-    /** 緩存過期時間 (毫秒) */
+    /** 快取過期時間 (毫秒) */
     private static final long CACHE_TTL = 30 * 60 * 1000; // 30 分鐘
 
     static {
@@ -42,7 +42,7 @@ public class WeatherService {
     }
 
     /**
-     * 城市位置信息
+     * 城市位置資訊
      */
     private static class WeatherLocation {
         String name;
@@ -57,7 +57,7 @@ public class WeatherService {
     }
 
     /**
-     * 天氣數據緩存項
+     * 天氣數據快取項
      */
     private static class WeatherCacheEntry {
         WeatherData data;
@@ -79,23 +79,23 @@ public class WeatherService {
     public WeatherData getWeatherByCity(String cityName) {
         log.info("查詢城市天氣: {}", cityName);
 
-        // 檢查緩存
+        // 檢查快取
         WeatherCacheEntry cacheEntry = weatherCache.get(cityName);
         if (cacheEntry != null && !cacheEntry.isExpired()) {
-            log.debug("返回緩存的天氣數據: {}", cityName);
+            log.debug("返回快取的天氣數據: {}", cityName);
             return cacheEntry.data;
         }
 
         // 查詢城市坐標
         WeatherLocation location = CITIES.get(cityName);
         if (location == null) {
-            throw new IllegalArgumentException("未支持的城市: " + cityName);
+            throw new IllegalArgumentException("未支援的城市: " + cityName);
         }
 
-        // 調用 API 獲取天氣數據（實現中為模擬數據）
+        // 呼叫 API 獲取天氣數據（實現中為模擬數據）
         WeatherData weatherData = fetchWeatherData(location);
 
-        // 緩存結果
+        // 快取結果
         weatherCache.put(cityName, new WeatherCacheEntry(weatherData));
 
         return weatherData;
@@ -109,7 +109,7 @@ public class WeatherService {
 
         String key = latitude + "," + longitude;
 
-        // 檢查緩存
+        // 檢查快取
         WeatherCacheEntry cacheEntry = weatherCache.get(key);
         if (cacheEntry != null && !cacheEntry.isExpired()) {
             return cacheEntry.data;
@@ -162,8 +162,7 @@ public class WeatherService {
                     forecast.getMinTemperature(),
                     forecast.getDayCondition(),
                     forecast.getNightCondition(),
-                    forecast.getPrecipitationProbability()
-            ));
+                    forecast.getPrecipitationProbability()));
 
             if (forecast.getRecommendation() != null && !forecast.getRecommendation().isEmpty()) {
                 summary.append("建議: ").append(forecast.getRecommendation()).append("\n");
@@ -197,8 +196,7 @@ public class WeatherService {
                         current.getFeelsLike().intValue(),
                         current.getCondition(),
                         current.getWindSpeed(),
-                        current.getHumidity()
-                ));
+                        current.getHumidity()));
             } catch (Exception e) {
                 log.warn("獲取 {} 的天氣數據失敗", cityName, e);
                 comparison.append(String.format("%-10s | 數據不可用\n", cityName));
@@ -252,18 +250,18 @@ public class WeatherService {
     }
 
     /**
-     * 清空緩存
+     * 清空快取
      */
     public void clearCache() {
         weatherCache.clear();
-        log.info("已清空天氣數據緩存");
+        log.info("已清空天氣數據快取");
     }
 
     /**
      * 模擬從 API 獲取天氣數據
      */
     private WeatherData fetchWeatherData(WeatherLocation location) {
-        log.debug("調用天氣 API: {}", location.name);
+        log.debug("呼叫天氣 API: {}", location.name);
 
         // 模擬當前天氣
         CurrentWeather current = CurrentWeather.builder()
@@ -271,14 +269,14 @@ public class WeatherService {
                 .feelsLike(19.0 + Math.random() * 10)
                 .condition(getRandomCondition())
                 .description("天氣狀況描述")
-                .humidity((int)(50 + Math.random() * 40))
-                .pressure(1013 + (int)(Math.random() * 20 - 10))
+                .humidity((int) (50 + Math.random() * 40))
+                .pressure(1013 + (int) (Math.random() * 20 - 10))
                 .windSpeed(2.0 + Math.random() * 10)
-                .windDirection((int)(Math.random() * 360))
-                .windDirectionName(getWindDirectionName((int)(Math.random() * 360)))
+                .windDirection((int) (Math.random() * 360))
+                .windDirectionName(getWindDirectionName((int) (Math.random() * 360)))
                 .visibility(10.0)
-                .precipitationProbability((int)(Math.random() * 100))
-                .uvIndex((int)(Math.random() * 12))
+                .precipitationProbability((int) (Math.random() * 100))
+                .uvIndex((int) (Math.random() * 12))
                 .updateTime(LocalDateTime.now())
                 .build();
 
@@ -290,10 +288,10 @@ public class WeatherService {
                     .temperature(20.0 + Math.random() * 8)
                     .feelsLike(19.0 + Math.random() * 8)
                     .condition(getRandomCondition())
-                    .precipitationProbability((int)(Math.random() * 100))
+                    .precipitationProbability((int) (Math.random() * 100))
                     .windSpeed(1.0 + Math.random() * 10)
                     .precipitation(Math.random() * 5)
-                    .humidity((int)(50 + Math.random() * 40))
+                    .humidity((int) (50 + Math.random() * 40))
                     .build());
         }
 
@@ -308,12 +306,12 @@ public class WeatherService {
                     .avgTemperature(20.0 + Math.random() * 5)
                     .dayCondition(getRandomCondition())
                     .nightCondition(getRandomCondition())
-                    .precipitationProbability((int)(Math.random() * 100))
+                    .precipitationProbability((int) (Math.random() * 100))
                     .totalPrecipitation(Math.random() * 20)
                     .maxWindSpeed(5.0 + Math.random() * 15)
-                    .maxHumidity((int)(70 + Math.random() * 30))
-                    .minHumidity((int)(40 + Math.random() * 30))
-                    .uvIndex((int)(Math.random() * 12))
+                    .maxHumidity((int) (70 + Math.random() * 30))
+                    .minHumidity((int) (40 + Math.random() * 30))
+                    .uvIndex((int) (Math.random() * 12))
                     .sunrise("06:30")
                     .sunset("18:45")
                     .recommendation(getRecommendation(i))
@@ -346,19 +344,27 @@ public class WeatherService {
     }
 
     private String getRandomCondition() {
-        String[] conditions = {"晴天", "多雲", "陰天", "小雨", "中雨", "大雨", "雷陣雨"};
-        return conditions[(int)(Math.random() * conditions.length)];
+        String[] conditions = { "晴天", "多雲", "陰天", "小雨", "中雨", "大雨", "雷陣雨" };
+        return conditions[(int) (Math.random() * conditions.length)];
     }
 
     private String getWindDirectionName(int degrees) {
-        if (degrees < 22.5 || degrees >= 337.5) return "北風";
-        else if (degrees < 67.5) return "東北風";
-        else if (degrees < 112.5) return "東風";
-        else if (degrees < 157.5) return "東南風";
-        else if (degrees < 202.5) return "南風";
-        else if (degrees < 247.5) return "西南風";
-        else if (degrees < 292.5) return "西風";
-        else return "西北風";
+        if (degrees < 22.5 || degrees >= 337.5)
+            return "北風";
+        else if (degrees < 67.5)
+            return "東北風";
+        else if (degrees < 112.5)
+            return "東風";
+        else if (degrees < 157.5)
+            return "東南風";
+        else if (degrees < 202.5)
+            return "南風";
+        else if (degrees < 247.5)
+            return "西南風";
+        else if (degrees < 292.5)
+            return "西風";
+        else
+            return "西北風";
     }
 
     private String getRecommendation(int daysAhead) {

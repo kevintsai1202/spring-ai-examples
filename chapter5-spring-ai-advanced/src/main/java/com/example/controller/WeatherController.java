@@ -12,8 +12,8 @@ import java.util.Map;
 
 /**
  * 天氣控制器 - 提供天氣相關的 REST API
- * 支持自然語言查詢和直接 API 調用
- * 用於 5.9 天氣 API 集成章節
+ * 支援自然語言查詢和直接 API 呼叫
+ * 用於 5.9 天氣 API 整合章節
  */
 @Slf4j
 @RestController
@@ -38,7 +38,7 @@ public class WeatherController {
             WeatherData weatherData = weatherService.getWeatherByCity(city);
             return ResponseEntity.ok(weatherData);
         } catch (IllegalArgumentException e) {
-            log.error("城市不支持: {}", city);
+            log.error("城市不支援: {}", city);
             return ResponseEntity.badRequest().body(null);
         } catch (Exception e) {
             log.error("查詢失敗", e);
@@ -60,7 +60,7 @@ public class WeatherController {
         } catch (Exception e) {
             log.error("查詢失敗", e);
             return ResponseEntity.internalServerError()
-                    .body("無法獲取天氣信息: " + e.getMessage());
+                    .body("無法獲取天氣資訊: " + e.getMessage());
         }
     }
 
@@ -78,7 +78,7 @@ public class WeatherController {
         } catch (Exception e) {
             log.error("查詢失敗", e);
             return ResponseEntity.internalServerError()
-                    .body("無法獲取預報信息: " + e.getMessage());
+                    .body("無法獲取預報資訊: " + e.getMessage());
         }
     }
 
@@ -168,7 +168,7 @@ public class WeatherController {
         } catch (Exception e) {
             log.error("查詢失敗", e);
             return ResponseEntity.internalServerError()
-                    .body("無法獲取警告信息: " + e.getMessage());
+                    .body("無法獲取警告資訊: " + e.getMessage());
         }
     }
 
@@ -219,7 +219,7 @@ public class WeatherController {
      *
      * 示例:
      * {
-     *   "question": "台北下週會下雨嗎？"
+     * "question": "台北下週會下雨嗎？"
      * }
      */
     @PostMapping("/ask")
@@ -229,8 +229,8 @@ public class WeatherController {
         String question = request.get("question");
 
         try {
-            // 這裡可以集成 AI/LLM 來理解自然語言並調用適當的工具
-            // 暫時返回一個提示信息
+            // 這裡可以整合 AI/LLM 來理解自然語言並呼叫適當的工具
+            // 暫時返回一個提示訊息
             return ResponseEntity.ok("收到查詢: " + question + "\n" +
                     "建議直接使用具體的 API 端點進行查詢");
         } catch (Exception e) {
@@ -241,32 +241,32 @@ public class WeatherController {
     }
 
     /**
-     * 清空天氣數據緩存
+     * 清空天氣數據快取
      * POST /api/v1/weather/cache/clear
      */
     @PostMapping("/cache/clear")
     public ResponseEntity<String> clearCache() {
-        log.info("清空天氣數據緩存");
+        log.info("清空天氣數據快取");
 
         try {
             weatherService.clearCache();
-            return ResponseEntity.ok("天氣數據緩存已清空");
+            return ResponseEntity.ok("天氣數據快取已清空");
         } catch (Exception e) {
-            log.error("清空緩存失敗", e);
+            log.error("清空快取失敗", e);
             return ResponseEntity.internalServerError()
-                    .body("清空緩存失敗");
+                    .body("清空快取失敗");
         }
     }
 
     /**
-     * 獲取支持的城市列表
+     * 獲取支援的城市列表
      * GET /api/v1/weather/supported-cities
      */
     @GetMapping("/supported-cities")
     public ResponseEntity<String> getSupportedCities() {
-        log.info("獲取支持的城市列表");
+        log.info("獲取支援的城市列表");
 
-        String cities = "支持的城市列表:\n" +
+        String cities = "支援的城市列表:\n" +
                 "- 台北 / 台北市\n" +
                 "- 台中 / 台中市\n" +
                 "- 高雄 / 高雄市\n" +

@@ -1,6 +1,6 @@
 /**
- * Calculator Tools Class
- * Provides basic mathematical operations to solve AI calculation accuracy issues
+ * 計算機工具類別
+ * 提供基本的數學運算以解決 AI 計算準確性問題
  */
 package com.example.tools;
 
@@ -10,11 +10,12 @@ import org.springframework.stereotype.Component;
 public class CalculatorTools {
 
     /**
-     * Basic mathematical operations
-     * @param operation Operation type (add, subtract, multiply, divide)
-     * @param a First number
-     * @param b Second number
-     * @return Operation result
+     * 基本數學運算
+     * 
+     * @param operation 運算類型 (add, subtract, multiply, divide)
+     * @param a         第一個數字
+     * @param b         第二個數字
+     * @return 運算結果
      */
     public String calculate(String operation, double a, double b) {
         try {
@@ -28,32 +29,33 @@ public class CalculatorTools {
                 result = a * b;
             } else if ("divide".equalsIgnoreCase(operation)) {
                 if (b == 0) {
-                    return "Error: Cannot divide by zero";
+                    return "錯誤: 不能除以零";
                 }
                 result = a / b;
             } else {
-                return "Unsupported operation: " + operation;
+                return "不支援的運算: " + operation;
             }
 
             return String.format("%.2f %s %.2f = %.2f", a, getOperationSymbol(operation), b, result);
 
         } catch (Exception e) {
-            return "Calculation error: " + e.getMessage();
+            return "計算錯誤: " + e.getMessage();
         }
     }
 
     /**
-     * Complex mathematical expressions
-     * @param expression Mathematical expression (e.g., "2 + 3 * 4")
-     * @return Calculation result
+     * 複雜數學運算式
+     * 
+     * @param expression 數學運算式 (例如: "2 + 3 * 4")
+     * @return 計算結果
      */
     public String evaluateExpression(String expression) {
         try {
-            // This can be integrated with a math expression parser
-            // For now, just a placeholder
-            return "Expression evaluation for '" + expression + "' is under development";
+            // 可以整合數學運算式解析器
+            // 目前僅為佔位符
+            return "運算式評估 '" + expression + "' 開發中";
         } catch (Exception e) {
-            return "Expression evaluation error: " + e.getMessage();
+            return "運算式評估錯誤: " + e.getMessage();
         }
     }
 

@@ -1,6 +1,6 @@
 /**
- * Prompt Template Service
- * Provides basic prompt template functionality
+ * 提示詞範本服務
+ * 提供基本的提示詞範本功能
  */
 package com.example.service;
 
@@ -15,6 +15,7 @@ public class PromptTemplateService {
 
     /**
      * Create a basic prompt with template substitution
+     * 
      * @param topic The topic to explain
      * @param level The difficulty level (Beginner/Intermediate/Advanced)
      * @return The created Prompt
@@ -33,9 +34,8 @@ public class PromptTemplateService {
 
         // Provide variable values
         Map<String, Object> variables = Map.of(
-            "topic", topic,
-            "level", level
-        );
+                "topic", topic,
+                "level", level);
 
         // Generate final Prompt
         return promptTemplate.create(variables);

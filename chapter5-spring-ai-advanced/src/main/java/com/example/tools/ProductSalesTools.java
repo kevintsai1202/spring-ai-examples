@@ -105,16 +105,15 @@ public class ProductSalesTools {
 
         return String.format(
                 "%s 年銷售分析:\n" +
-                "總銷售額: %s\n" +
-                "總銷售件數: %d\n" +
-                "環比增長: %s%%\n" +
-                "同比增長: %s%%",
+                        "總銷售額: %s\n" +
+                        "總銷售件數: %d\n" +
+                        "月增率: %s%%\n" +
+                        "年增率: %s%%",
                 year,
                 response.getSummary().getTotalSalesAmount(),
                 response.getSummary().getTotalSalesVolume(),
                 response.getSummary().getMonthOverMonthGrowth(),
-                response.getSummary().getYearOverYearGrowth()
-        );
+                response.getSummary().getYearOverYearGrowth());
     }
 
     /**
@@ -150,7 +149,7 @@ public class ProductSalesTools {
             String formattedAmount = df.format(forecast.getForecastedSalesAmount());
             String formattedConfidence = df.format(forecast.getConfidence());
 
-            sb.append(String.format("%s: 預測銷售額 %s, 件數 %d, 置信度 %s%%\n",
+            sb.append(String.format("%s: 預測銷售額 %s, 件數 %d, 信心度 %s%%\n",
                     forecast.getForecastPeriod(),
                     formattedAmount,
                     forecast.getForecastedVolume(),

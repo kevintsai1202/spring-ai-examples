@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: spring-ai-toolcalling
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      base-url: https://api.openai.com
+      chat:
+        options:
+          model: gpt-5-mini  # 支援多模態和 Tool Calling
+          temperature: 0.7
+          max-tokens: 2000
+      stream: true
+
+# 中央氣象局 API 配置
+cwa:
+  api:
+    key: ${CWA_API_KEY}
+    base-url: https://opendata.cwa.gov.tw/api/v1/rest/datastore
+
+# 應用程式配置
+server:
+  port: 8080
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 25MB
+      max-request-size: 50MB
+      file-size-threshold: 2KB
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true

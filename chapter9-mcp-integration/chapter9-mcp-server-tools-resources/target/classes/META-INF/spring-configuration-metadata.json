@@ -1,0 +1,33 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "type": "com.example.mcp.server.config.ApplicationConfig",
+      "sourceType": "com.example.mcp.server.config.ApplicationConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.features",
+      "type": "java.util.Map<java.lang.String,java.lang.Boolean>",
+      "description": "功能開關配置 key: 功能名稱 value: 是否啟用",
+      "sourceType": "com.example.mcp.server.config.ApplicationConfig"
+    },
+    {
+      "name": "app.name",
+      "type": "java.lang.String",
+      "description": "應用名稱",
+      "sourceType": "com.example.mcp.server.config.ApplicationConfig"
+    },
+    {
+      "name": "app.version",
+      "type": "java.lang.String",
+      "description": "應用版本",
+      "sourceType": "com.example.mcp.server.config.ApplicationConfig"
+    }
+  ],
+  "hints": [],
+  "ignored": {
+    "properties": []
+  }
+}
