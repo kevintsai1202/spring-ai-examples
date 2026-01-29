@@ -12,8 +12,8 @@ spring-ai-examples/
 ├── chapter3-enterprise-features/               # 第三章：企業級功能
 ├── chapter4-spring-ai-intro/                   # 第四章：Spring AI 入門
 ├── chapter5-image-generation/                  # 第五章：圖片生成
-├── chapter5-spring-ai-advanced/                # 第五章：Spring AI 進階功能
 ├── chapter5-spring-ai-toolcalling/             # 第五章：Tool Calling 實戰
+├── chapter5-spring-ai-advanced/                # 第五章：Spring AI 進階功能
 ├── chapter5-voice-generation/                  # 第五章：語音生成
 ├── chapter6-ai-memory/                         # 第六章：AI 記憶增強
 ├── chapter7-rag/                               # 第七章：RAG 實作
@@ -55,15 +55,15 @@ Spring AI 框架基礎概念與初步應用
 ### 第五章：Spring AI 進階功能
 完整的 Spring AI 進階功能實現，包括：
 
+#### chapter5-spring-ai-toolcalling
+專注於 Tool Calling 功能的深入實作與實戰範例
+
 #### chapter5-spring-ai-advanced
 - ✅ **提示詞範本** - 動態範本管理與變數替換
-- ✅ **Tool Calling** - 函數呼叫與工具整合
 - ✅ **多模態處理** - 圖片、文字混合分析
 - ✅ **企業數據工具** - 銷售分析、數據查詢
 - ✅ **天氣 API 集成** - 實時天氣查詢與預報
-
-#### chapter5-spring-ai-toolcalling
-專注於 Tool Calling 功能的深入實作
+- ✅ **進階 Tool Calling** - 複雜函數鏈與工具管理
 
 #### chapter5-image-generation
 AI 圖片生成功能實現
