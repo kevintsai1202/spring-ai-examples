@@ -1,6 +1,9 @@
 package com.example.config;
 
-import com.example.tools.*;
+import com.example.tools.CalculatorTools;
+import com.example.tools.DateTimeTools;
+import com.example.tools.EnhancedSalesTools;
+import com.example.tools.ProductDetailsTools;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
@@ -8,58 +11,62 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 高级 AI 配置 - 提供 Tool 链相关的 ChatClient
- * 用于 5.8 工具链调用功能
+ * 工具鏈 ChatClient 配置
  */
 @Configuration
 @RequiredArgsConstructor
 public class AdvancedAiConfig {
 
+    /**
+     * 重要物件：產品詳情工具
+     */
     private final ProductDetailsTools productDetailsTools;
+
+    /**
+     * 重要物件：進階銷售工具
+     */
     private final EnhancedSalesTools enhancedSalesTools;
+
+    /**
+     * 重要物件：日期時間工具
+     */
     private final DateTimeTools dateTimeTools;
+
+    /**
+     * 重要物件：計算工具
+     */
     private final CalculatorTools calculatorTools;
 
     /**
-     * 企业级工具链 ChatClient
-     * 支持复杂的多步骤工具调用
+     * 建立工具鏈 ChatClient
+     *
+     * @param chatModel AI 模型
+     * @return ChatClient
      */
     @Bean
     public ChatClient toolChainChatClient(ChatModel chatModel) {
         return ChatClient.builder(chatModel)
-                .defaultSystem("""
-                        你是一个专业的企业数据分析专家，擅长使用多种工具进行深度分析。
-
-                        工具使用策略：
-                        1. 根据用户查询自动选择合适的工具组合
-                        2. 按逻辑顺序调用工具（先获取基础数据，再进行详细分析）
-                        3. 充分利用工具链的优势，避免一次性获取过多数据
-                        4. 提供深入的分析洞察和商业建议
-
-                        可用工具：
-                        - 销售排行分析：获取年度销售数据和排行
-                        - 产品详情查询：获取产品型号和规格資訊
-                        - 产品比较分析：比较多个产品的销售表现
-                        - 数学计算：进行各种统计计算
-                        - 时间查询：获取当前时间和日期資訊
-
-
-                        回答风格：
-                        - 使用专业但易懂的语言
-                        - 提供结构化的分析结果
-                        - 包含具体的数据和洞察
-                        - 给出实用的商业建议
-                        """)
-                .build();
-    }
-
-    /**
-     * 快速查询 ChatClient（简化版）
-     */
-    @Bean("quickQueryChatClient")
-    public ChatClient quickQueryChatClient(ChatModel chatModel) {
-        return ChatClient.builder(chatModel)
-                .defaultSystem("你是一个快速查询助手，专门处理简单的数据查询请求。")
+                .defaultTools(
+                        enhancedSalesTools,
+                        productDetailsTools,
+                        calculatorTools,
+                        dateTimeTools
+                )
+                .defaultSystem(String.join("\n",
+                        "你是一個專業的企業資料分析專家，擅長使用多種工具進行深度分析。",
+                        "",
+                        "工具使用策略：",
+                        "1. 根據用戶查詢自動選擇合適的工具組合",
+                        "2. 按邏輯順序調用工具（先獲取基礎資料，再進行詳細分析）",
+                        "3. 充分利用工具鏈的優勢，避免一次性獲取過多資料",
+                        "4. 提供深入的分析洞察和商業建議",
+                        "",
+                        "回答風格：",
+                        "- 使用專業但易懂的語言",
+                        "- 提供結構化的分析結果",
+                        "- 包含具體的數據和洞察",
+                        "- 給出實用的商業建議"
+                ))
                 .build();
     }
 }
