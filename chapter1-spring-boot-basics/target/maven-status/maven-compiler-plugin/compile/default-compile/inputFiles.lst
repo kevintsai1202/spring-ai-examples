@@ -1,7 +1,7 @@
-E:\Spring_AI_BOOK\code-examples\chapter1-spring-boot-basics\src\main\java\com\example\demo\UserService.java
-E:\Spring_AI_BOOK\code-examples\chapter1-spring-boot-basics\src\main\java\com\example\demo\CreateUserRequest.java
-E:\Spring_AI_BOOK\code-examples\chapter1-spring-boot-basics\src\main\java\com\example\demo\UserController.java
-E:\Spring_AI_BOOK\code-examples\chapter1-spring-boot-basics\src\main\java\com\example\demo\DemoApplication.java
-E:\Spring_AI_BOOK\code-examples\chapter1-spring-boot-basics\src\main\java\com\example\demo\User.java
-E:\Spring_AI_BOOK\code-examples\chapter1-spring-boot-basics\src\main\java\com\example\demo\UserServiceImpl.java
-E:\Spring_AI_BOOK\code-examples\chapter1-spring-boot-basics\src\main\java\com\example\demo\UserResponse.java
+/app/chapter1-spring-boot-basics/src/main/java/com/example/demo/DemoApplication.java
+/app/chapter1-spring-boot-basics/src/main/java/com/example/demo/service/UserServiceImpl.java
+/app/chapter1-spring-boot-basics/src/main/java/com/example/demo/request/CreateUserRequest.java
+/app/chapter1-spring-boot-basics/src/main/java/com/example/demo/response/UserResponse.java
+/app/chapter1-spring-boot-basics/src/main/java/com/example/demo/controller/UserController.java
+/app/chapter1-spring-boot-basics/src/main/java/com/example/demo/service/UserService.java
+/app/chapter1-spring-boot-basics/src/main/java/com/example/demo/model/User.java
