@@ -97,8 +97,6 @@
                     <source>21</source>
                     <target>21</target>
                     <encoding>UTF-8</encoding>
-                    <executable>D:\java\jdk-21\bin\javac</executable>
-                    <fork>true</fork>
                 </configuration>
             </plugin>
 
@@ -117,7 +115,7 @@
                             <rules>
                                 <requireJavaVersion>
                                     <version>[21,)</version>
-                                    <message>請使用 Java 21（路徑：D:\java\jdk-21）執行 Maven，避免 spring-boot-maven-plugin 失敗。</message>
+                                    <message>請使用 Java 21+ 執行 Maven，避免 spring-boot-maven-plugin 失敗。</message>
                                 </requireJavaVersion>
                             </rules>
                             <fail>true</fail>

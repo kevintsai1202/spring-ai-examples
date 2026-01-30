@@ -92,8 +92,6 @@
                 <configuration>
                     <source>21</source>
                     <target>21</target>
-                    <executable>D:\java\jdk-21\bin\javac</executable>
-                    <fork>true</fork>
                 </configuration>
             </plugin>
             <plugin>
